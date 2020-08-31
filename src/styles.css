@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   padding: 1rem;
+  background-color: #EBECF0;
 }
 
 .title {
@@ -118,9 +119,15 @@
 
 /* Activity data for the day */
 .day-activity {
-  background-color: gray;
+  background-color: #1D222E;
   border-radius: .75rem;
   padding: 0.5rem;
   font-family: sans-serif;
   font-weight: 500;
+  color: #EBECF0
+}
+
+.activity-day-data-tile {
+  text-align: center;
+  color: #9BBB58
 }
