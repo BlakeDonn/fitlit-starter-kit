@@ -17,6 +17,7 @@ function onLoad() {
   displayDayActivity();
   displayWeeklyActivity();
   compareDayActivity();
+  displayConsecutiveDays()
 }
 
 function chooseRandomUser() {
@@ -153,6 +154,17 @@ function compareDayActivity() {
   </p>
   `
 }
+
+function displayConsecutiveDays() {
+  let consecutiveActivityDays = document.querySelector('.consecutive-days')
+  let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
+  activityConsecutiveDays.forEach((day, index) => {
+    consecutiveActivityDays.innerHTML +=
+    `<li> ${activityConsecutiveDays[index]}</li>`
+  })
+
+  }
+
 
 
 
