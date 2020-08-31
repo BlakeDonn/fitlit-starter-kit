@@ -111,7 +111,7 @@ function displayDayActivity() {
   activity = new Activity(activityData);
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
-  `<h2>Activity Data For The Day</h2>
+  `<h2 class"activity-day-data-tile"=>Activity Data For The Day</h2>
   <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
     ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
