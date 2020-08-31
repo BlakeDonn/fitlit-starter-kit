@@ -62,20 +62,21 @@ class Activity {
     return weeklyAverage >= this.getUserData(id).dailyStepGoal
   }
   consecutiveDays(id) {
-    let perUser = this.activitySet.filter(user => user.userID === id);
-    let consecDays = [];
-    perUser.forEach((day, i) => {
-      if (i === 0 || i >= perUser.length - 2) {
-        return
+      let perUser = this.activitySet.filter(user => user.userID === id);
+      let consecDays = [];
+      perUser.forEach((day, i) => {
+        if (i < 2 ) {
+          return
+        }
+        if (day.numSteps > perUser[i - 1].numSteps &&
+        perUser[i - 1].numSteps > perUser[i - 2].numSteps) {
+          consecDays.push(day.date)
       }
-      if (day.numSteps > perUser[i - 1].numSteps &&
-      perUser[i - 1].numSteps > perUser[i - 2].numSteps) {
-        consecDays.push(day.date)
-    }
-    return consecDays;
-})
+  })
+      return consecDays;
+  }
 }
-}
+
 if (typeof module !== 'undefined') {
   module.exports = Activity;
 }

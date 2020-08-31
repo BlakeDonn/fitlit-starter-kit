@@ -52,6 +52,7 @@ function compareUsersSteps() {
 
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
+  //userFriends is an array of three names
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`)
 }
 
@@ -111,12 +112,13 @@ function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
   `<h2>Activity Data For The Day</h2>
-  <p> Daily Activity Data:
+  <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
     ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
-    Today's mintues active data
-    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}
-    Today's distance walked data
+    </p>
+    <p class="day-activity today-minutes-active">Today's mintues active data
+    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}</p>
+    <p class="day-activity today-distance-walked">Today's distance walked data
     ${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}
   </p>
   `
@@ -155,15 +157,16 @@ function compareDayActivity() {
   `
 }
 
+
+
 function displayConsecutiveDays() {
   let consecutiveActivityDays = document.querySelector('.consecutive-days')
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
   activityConsecutiveDays.forEach((day, index) => {
     consecutiveActivityDays.innerHTML +=
-    `<li> ${activityConsecutiveDays[index]}</li>`
+    `<ul> ${activityConsecutiveDays[index]}</ul>`
   })
-
-  }
+}
 
 
 
