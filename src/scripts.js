@@ -275,7 +275,6 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
 }
 function consecutiveStepGoalDays(activityConsecutiveDays) {
   let dataPoints1 = []
-  let date = ''
   console.log(activityConsecutiveDays.length)
   activityConsecutiveDays.forEach(day => {
     (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
