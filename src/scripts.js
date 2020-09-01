@@ -6,8 +6,8 @@ window.addEventListener('load', onLoad);
 
 function onLoad() {
   chooseRandomUser();
-  displayUserInfo();
   compareUsersSteps();
+  displayUserInfo();
   displayFriendList();
   displayWaterConsumption();
   displayWeeklyConsumption();
@@ -18,6 +18,7 @@ function onLoad() {
   displayWeeklyActivity();
   compareDayActivity();
   displayConsecutiveDays()
+  stepDoughnutGraph();
 }
 
 function chooseRandomUser() {
@@ -30,30 +31,30 @@ function chooseRandomUser() {
 function displayUserInfo() {
   let infoCard = document.querySelector('.user-info-card')
   infoCard.innerHTML +=
-    `<h2>INFO</h2>
-    <p>Name: ${user.userData.name}</p>
-    <p>Address: ${user.userData.address}</p>
-    <p>Email: ${user.userData.email}</p>
-    <p>Stride: ${user.userData.strideLength} feet</p>
-    <p>Steps: ${user.userData.dailyStepGoal} steps per day</p>
-    <p class="friend-names">Friends: ${user.userData.friends}</p>`
+    `<p class="user-name">${user.userData.name}</p>
+    <p class="user-address">${user.userData.address}</p>
+    <p class="user-email">${user.userData.email}</p>
+    <p class="stride-length">Your stride length is : ${user.userData.strideLength} feet</p>
+    `
 }
 function compareUsersSteps() {
   userRepository = new UserRepository(userData)
+  activity = new Activity(activityData);
+  console.log("D", activity.getDayData("2019/06/15", user.userData.id).numSteps)
   let userComparisons = document.querySelector('.compare-user-steps')
   userComparisons.innerHTML +=
-    `<h2>STEPS</h2>
-    <p>Your daily step goal is: ${user.userData.dailyStepGoal}</p>
-    <p>All users daily step goal is: ${userRepository.getAvgStepGoal()}</p>`
+    `<p class="your-daily-step-count">Your daily step count is: ${activity.getDayData("2019/06/15", user.userData.id).numSteps}</p>
+    <p class="your-daily-step-goal">Your daily step goal is: ${user.userData.dailyStepGoal}</p>
+    `
 }
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
-  //userFriends is an array of three names
-  return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`)
+  console.log("X", userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`))
+  return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
 }
 function displayFriendList() {
-  let friendList = document.querySelector('.friend-names')
-  friendList.insertAdjacentHTML('afterBegin', this.makeFriendList(this.user, this.userRepo))
+  let friendList = document.querySelector('.stride-length')
+  friendList.insertAdjacentHTML('beforeEnd', this.makeFriendList())
 }
 function displayWaterConsumption() {
   hydrationRepository = new HydrationRepository(hydrationData);
@@ -96,16 +97,16 @@ function allTimeSleep() {
   `
 }
 function displayDayActivity() {
-  activity = new Activity(activityData);
   let dayActivity = document.querySelector('.day-activity-card')
-  dayActivity.innerHTML +=
-  `<h2>Activity Data For The Day</h2>
-  <p> Daily Activity Data:
+  dayActivity.innerHTML +=  
+  `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
+  <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
     ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
-    Today's mintues active data
-    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}
-    Today's distance walked data
+    </p>
+    <p class="day-activity today-minutes-active">Today's mintues active data
+    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}</p>
+    <p class="day-activity today-distance-walked">Today's distance walked data
     ${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}
   </p>
   `
@@ -115,7 +116,6 @@ function displayWeeklyActivity() {
   weeklyStepCountGraph(weeklyActivity)
   weeklyStairFlightsClimbed(weeklyActivity)
   weeklyMinutesActive(weeklyActivity)
-
 }
 function compareDayActivity() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
@@ -139,8 +139,16 @@ function displayConsecutiveDays() {
 function hydrationGraph(hydrationData) {
   let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces, }))
   let hydrationChart = new CanvasJS.Chart("chartContainer", {
-    title: {
-      text: "Your Weekly Hydration Data in Ounces"
+    backgroundColor: "#1D222E",
+    title:{
+      text: "Your Weekly Hydration Data in Ounces",
+      fontColor: "#EBECF0",
+    },
+    axisX:{
+        labelFontColor: "#EBECF0"
+      },
+    axisY:{
+        labelFontColor: "#EBECF0"
     },
     data: [
       {
@@ -153,44 +161,47 @@ function hydrationGraph(hydrationData) {
   hydrationChart.render();
 }
 function sleepGraph(sleepData) {
+  console.log(sleepData)
+  let dataPoint = sleepData.map(x => ({label: x.date, y: x.sleepQuality}))
   let sleepQualityChart = new CanvasJS.Chart("sleepChartContainer", {
-    title: {
-      text: "Your Weekly Sleep Quality Data"
+    backgroundColor: "#1D222E",
+    title:{
+      text: "Your Weekly Sleep Quality Data",
+      fontColor: "#EBECF0"
+    },
+    axisX:{
+      labelFontColor: "#EBECF0"
+    },
+    axisY:{
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
         type: "column",
-        dataPoints: [
-          { label: sleepData[0].date, y: sleepData[0].sleepQuality },
-          { label: sleepData[1].date, y: sleepData[1].sleepQuality },
-          { label: sleepData[2].date, y: sleepData[2].sleepQuality },
-          { label: sleepData[3].date, y: sleepData[3].sleepQuality },
-          { label: sleepData[4].date, y: sleepData[4].sleepQuality },
-          { label: sleepData[5].date, y: sleepData[5].sleepQuality },
-          { label: sleepData[6].date, y: sleepData[6].sleepQuality  }
-        ]
+        dataPoints: dataPoint
       }
     ]
   });
   sleepQualityChart.render();
 }
 function sleepAmountGraph(sleepData) {
+  let dataPoint = sleepData.map(x => ({label: x.date, y: x.hoursSlept}))
   let sleepAmountChart = new CanvasJS.Chart('sleepChartAmountContainer', {
+    backgroundColor: "#1D222E",
     title: {
-      text: "Your Weekly Sleep in Hours"
+      text: "Your Weekly Sleep in Hours",
+      fontColor: "#EBECF0"
+    },
+    axisX: {
+      labelFontColor: "#EBECF0"
+    },
+    axisY: {
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
         type: "column",
-        dataPoints: [
-          { label: sleepData[0].date, y: sleepData[0].hoursSlept },
-          { label: sleepData[1].date, y: sleepData[1].hoursSlept },
-          { label: sleepData[2].date, y: sleepData[2].hoursSlept },
-          { label: sleepData[3].date, y: sleepData[3].hoursSlept },
-          { label: sleepData[4].date, y: sleepData[4].hoursSlept },
-          { label: sleepData[5].date, y: sleepData[5].hoursSlept },
-          { label: sleepData[6].date, y: sleepData[6].hoursSlept },
-        ]
+        dataPoints: dataPoint
       }
     ]
   })
@@ -199,8 +210,16 @@ function sleepAmountGraph(sleepData) {
 function weeklyStepCountGraph(activityData) {
   let dataPoint = activityData.map(data => ({label: data.date, y: data.stepCount}))
   let stepCountChart = new CanvasJS.Chart('stepCountWeeklyChart', {
+    backgroundColor: "#1D222E",
     title: {
-      text: "Your Weekly Step Count Data"
+      text: "Your Weekly Step Count Data",
+      fontColor: "#EBECF0"
+    },
+    axisX: {
+      labelFontColor: "#EBECF0"
+    },
+    axisY: {
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
@@ -214,8 +233,16 @@ function weeklyStepCountGraph(activityData) {
 function weeklyStairFlightsClimbed(activityData) {
   let dataPoint = activityData.map(data => ({label: data.date, y: data.flightsOfStairsClimbed}))
   let flightsClimbedChart = new CanvasJS.Chart('flightsClimbedChart', {
+    backgroundColor: "#1D222E",
     title: {
-      text: "Your Weekly Flights of Stairs Climbed"
+      text: "Your Weekly Flights of Stairs Climbed",
+      fontColor: "#EBECF0"
+    },
+    axisX: {
+      labelFontColor: "#EBECF0"
+    },
+    axisY: {
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
@@ -229,8 +256,16 @@ function weeklyStairFlightsClimbed(activityData) {
 function weeklyMinutesActive(activityData) {
   let dataPoint = activityData.map(data => ({label: data.date, y: data.minutesActive}))
   let minutesActiveChart = new CanvasJS.Chart('minutesActiveChart', {
+    backgroundColor: "#1D222E",
     title: {
-      text: "Your Weekly Minutes Active"
+      text: "Your Weekly Minutes Active",
+      fontColor: "#EBECF0"
+    },
+    axisX: {
+      labelFontColor: "#EBECF0"
+    },
+    axisY: {
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
@@ -286,5 +321,31 @@ function consecutiveStepGoalDays(activityConsecutiveDays) {
       dataPoints: dataPoints1
     }]
   });
+  chart.render();
+}
+
+function stepDoughnutGraph() {
+  var chart = new CanvasJS.Chart("doughnutChart",{
+  backgroundColor: "#1D222E",
+    title:{
+      text: "Steps Walked vs Step Goal",
+      fontColor: "#EBECF0"
+    },
+    data: [
+    {
+     indexLabelFontColor: "#EBECF0",
+     type: "doughnut",
+     dataPoints: [
+     // {  y: 100, indexLabel: "Steps Walked" },
+     // {  y: 35.0, indexLabel: "StepGoal" },
+     // { label: sleepData[0].date, y: sleepData[0].sleepQuality },
+
+     {  y: activity.getDayData("2019/06/15", user.userData.id).numSteps, indexLabel: "Steps Walked", color: "#9CBB58"},
+     {  y: user.userData.dailyStepGoal, indexLabel: "StepGoal", color: "#23BFAA"}
+     ]
+   },
+   ]
+ });
+
   chart.render();
 }
