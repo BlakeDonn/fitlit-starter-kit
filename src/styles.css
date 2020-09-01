@@ -47,8 +47,25 @@
 }
 .comparison-activity-card{
   border: 1px solid Green;
+  display: grid;
+  grid-template-rows: .25fr 1.75fr 1.75fr 1.75fr;
 }
-
+.comparison-activity-header{
+  border: 1px solid Green;
+  background: #5081BC;
+}
+.comparison-steps-card{
+  border: 1px solid Green;
+  background: #8064A1;
+}
+.comparison-minutes-card{
+  border: 1px solid Green;
+  background: #F79647
+}
+.comparison-flights-card{
+  border: 1px solid Green;
+  background: #9CBB58;
+}
 .user-profile-display{
   display: grid;
   justify-self: center;
