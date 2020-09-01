@@ -1,7 +1,3 @@
-
-
-
-
 window.addEventListener('load', onLoad);
 
 function onLoad() {
@@ -13,14 +9,12 @@ function onLoad() {
   displayWeeklyConsumption();
   displayDailySleep();
   displayWeeklySleep();
-  // allTimeSleep();
   displayDayActivity();
   displayWeeklyActivity();
-  compareDayActivity();
-  displayConsecutiveDays()
-  createDoughnutProperties();
+  displayComparison();
+  displayHotStreak()
+  displayStepGoal();
 }
-
 function chooseRandomUser() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
@@ -43,16 +37,8 @@ function compareUsersSteps() {
 }
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
-  console.log("X", userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`))
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
 }
-
-// "afterbegin"
-// "afterend"
-// "beforebegin"
-// "beforeend"
-
-
 function displayFriendList() {
   let friendList = document.querySelector('.user-friends')
   friendList.insertAdjacentHTML('afterend', this.makeFriendList())
@@ -66,8 +52,8 @@ function displayWaterConsumption() {
     ${hydrationRepository.dayOunces("2019/06/15", user.userData.id)}oz</p>`
 }
 function displayWeeklyConsumption() {
-  let userHydrationData = hydrationRepository.dailyOuncesPerGivenWeek("2019/06/15", user.userData.id)
-  hydrationGraph(userHydrationData);
+  let userHydrationData = hydrationRepository.weeklyHydrationProperties(hydrationRepository.hydrationSet[hydrationRepository.hydrationSet.length - 1].date, user.userData.id)
+  graphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
 function displayDailySleep() {
   sleep = new Sleep(sleepData)
@@ -88,22 +74,10 @@ function displayDailySleep() {
   `
 }
 function displayWeeklySleep() {
-  let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
-  sleepGraph(sleepWeekly)
-  sleepAmountGraph(sleepWeekly)
+  let sleepWeekly = sleep.weeklySleepProperties(sleep.sleepSet[sleep.sleepSet.length - 1].date, user.userData.id)
+  graphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
+  graphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
-// function allTimeSleep() {
-//   let sleepAllTime = document.querySelector('.all-time-sleep-card')
-//   sleepAllTime.innerHTML +=
-//   `<h2>Sleep Data For All Time</h2>
-//   <p> All time sleep data:
-//     All time Average Hours Slept
-//     ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
-//     All time Average Sleep Quality
-//     ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
-//   </p>
-//   `
-// }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
@@ -120,12 +94,12 @@ function displayDayActivity() {
   `
 }
 function displayWeeklyActivity() {
-  let weeklyActivity = activity.weeklyActivityProperties("2019/06/15", user.userData.id)
-  weeklyStepCountGraph(weeklyActivity)
-  weeklyStairFlightsClimbed(weeklyActivity)
-  weeklyMinutesActive(weeklyActivity)
+  let weeklyActivity = activity.weeklyActivityProperties(activity.activitySet[activity.activitySet.length - 1].date, user.userData.id)
+  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount') 
+  graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
+  graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
-function compareDayActivity() {
+function displayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
   let activityFindAllUsers = activity.findDayActivity("2019/06/15")
   let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
@@ -135,16 +109,16 @@ function compareDayActivity() {
   <p class="comparison-minutes-card" id ="comparison-minutes"></p>
   <p class="comparison-flights-card" id ="comparison-flights"></p>
   `
-  dailyComparisonActivity(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
-  dailyComparisonActivity(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
-  dailyComparisonActivity(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
+  comparisonGraphBuilder(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
+  comparisonGraphBuilder(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
+  comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
-function displayConsecutiveDays() {
+function displayHotStreak() {
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
-  consecutiveStepGoalDays(activityConsecutiveDays)
+  hotStreakGraphBuilder(activityConsecutiveDays)
 
 }
-function createDoughnutProperties() {
+function displayStepGoal() {
   let stepData = activity.getDayData("2019/06/15", user.userData.id).numSteps;
   let stepGoal = user.userData.dailyStepGoal;
   let displayMessage;
@@ -161,14 +135,14 @@ function createDoughnutProperties() {
     titleText = 'You Crushed Your Step Goal!'
     legendStatus = false;
   }
-  stepDoughnutGraph(stepData,  stepGoal, displayMessage, titleText, legendStatus)
+  stepGoalGraphBuilder(stepData,  stepGoal, displayMessage, titleText, legendStatus)
 }
-function hydrationGraph(hydrationData) {
-  let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces, }))
-  let hydrationChart = new CanvasJS.Chart("chartContainer", {
+function graphBuilder(userData, chartName, title, prop1) {
+  let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
+  let hydrationChart = new CanvasJS.Chart(chartName, {
     backgroundColor: "#1D222E",
     title:{
-      text: "Your Weekly Hydration Data in Ounces",
+      text: title,
       fontColor: "#EBECF0",
     },
     axisX:{
@@ -187,123 +161,7 @@ function hydrationGraph(hydrationData) {
   });
   hydrationChart.render();
 }
-function sleepGraph(sleepData) {
-  console.log(sleepData)
-  let dataPoint = sleepData.map(x => ({label: x.date, y: x.sleepQuality}))
-  let sleepQualityChart = new CanvasJS.Chart("sleepChartContainer", {
-    backgroundColor: "#1D222E",
-    title:{
-      text: "Your Weekly Sleep Quality Data",
-      fontColor: "#EBECF0"
-    },
-    axisX:{
-      labelFontColor: "#EBECF0"
-    },
-    axisY:{
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  });
-  sleepQualityChart.render();
-}
-function sleepAmountGraph(sleepData) {
-  let dataPoint = sleepData.map(x => ({label: x.date, y: x.hoursSlept}))
-  let sleepAmountChart = new CanvasJS.Chart('sleepChartAmountContainer', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Sleep in Hours",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  sleepAmountChart.render();
-}
-function weeklyStepCountGraph(activityData) {
-  let dataPoint = activityData.map(data => ({label: data.date, y: data.stepCount}))
-  let stepCountChart = new CanvasJS.Chart('stepCountWeeklyChart', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Step Count Data",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  stepCountChart.render();
-}
-function weeklyStairFlightsClimbed(activityData) {
-  let dataPoint = activityData.map(data => ({label: data.date, y: data.flightsOfStairsClimbed}))
-  let flightsClimbedChart = new CanvasJS.Chart('flightsClimbedChart', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Flights of Stairs Climbed",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  flightsClimbedChart.render();
-}
-function weeklyMinutesActive(activityData) {
-  let dataPoint = activityData.map(data => ({label: data.date, y: data.minutesActive}))
-  let minutesActiveChart = new CanvasJS.Chart('minutesActiveChart', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Minutes Active",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  minutesActiveChart.render()
-}
-function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInterval ) {
+function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInterval ) {
   let chart = new CanvasJS.Chart(id, {
     animationEnabled: true,
     theme: 'dark1',
@@ -326,7 +184,7 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
   });
   chart.render();
 }
-function consecutiveStepGoalDays(activityConsecutiveDays) {
+function hotStreakGraphBuilder(activityConsecutiveDays) {
   let dataPoints1 = []
   console.log(activityConsecutiveDays.length)
   activityConsecutiveDays.forEach(day => {
@@ -350,7 +208,7 @@ function consecutiveStepGoalDays(activityConsecutiveDays) {
   });
   chart.render();
 }
-  function stepDoughnutGraph (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
+function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
   var chart = new CanvasJS.Chart("doughnutChart",{
     backgroundColor: "#1D222E",
     title:{
