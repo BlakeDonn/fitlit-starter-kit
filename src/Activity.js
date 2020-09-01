@@ -70,7 +70,7 @@ class Activity {
         }
         if (day.numSteps > perUser[i - 1].numSteps &&
         perUser[i - 1].numSteps > perUser[i - 2].numSteps) {
-          consecDays.push(day.date)
+          consecDays.push({date: day.date, steps: day.numSteps})
       }
   })
       return consecDays;
