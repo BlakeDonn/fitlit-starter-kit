@@ -42,10 +42,12 @@ function displayUserInfo() {
 
 function compareUsersSteps() {
   userRepository = new UserRepository(userData)
+  activity = new Activity(activityData);
   let userComparisons = document.querySelector('.compare-user-steps')
   userComparisons.innerHTML +=
     `<h2>STEPS</h2>
     <p>Your daily step goal is: ${user.userData.dailyStepGoal}</p>
+    <p>Your daily step count is: ${activity.getDayData("2019/06/15", user.userData.id).numSteps}</p>
     <p>All users daily step goal is: ${userRepository.getAvgStepGoal()}</p>`
 }
 
@@ -89,7 +91,6 @@ function displayDailySleep() {
 
 function displayWeeklySleep() {
   let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
-  console.log(sleepWeekly)
   sleepGraph(sleepWeekly)
   sleepAmountGraph(sleepWeekly)
 }
@@ -108,7 +109,6 @@ function allTimeSleep() {
 }
 
 function displayDayActivity() {
-  activity = new Activity(activityData);
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
   `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
@@ -131,7 +131,6 @@ function displayDayActivity() {
 // }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties("2019/06/15", user.userData.id)
-  console.log(weeklyActivity)
   weeklyStepCountGraph(weeklyActivity)
   weeklyStairFlightsClimbed(weeklyActivity)
   weeklyMinutesActive(weeklyActivity)
@@ -189,7 +188,6 @@ function hydrationGraph(hydrationData) {
 }
 
 function sleepGraph(sleepData) {
-  console.log(sleepData)
   let sleepQualityChart = new CanvasJS.Chart("sleepChartContainer", {
     title:{
       text: "Your Weekly Sleep Quality Data"
