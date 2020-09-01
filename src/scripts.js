@@ -110,11 +110,6 @@ function displayDayActivity() {
   </p>
   `
 }
-// function displayWeeklySleep() {
-//   let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
-//   sleepGraph(sleepWeekly)
-//   sleepAmountGraph(sleepWeekly)
-// }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties("2019/06/15", user.userData.id)
   weeklyStepCountGraph(weeklyActivity)
@@ -137,11 +132,7 @@ function compareDayActivity() {
   dailyComparisonActivity(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
 function displayConsecutiveDays() {
-  let consecutiveActivityDays = document.querySelector('.consecutive-days')
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
-  // activityConsecutiveDays.forEach((day, index) => {
-  //   consecutiveActivityDays.innerHTML +=
-  //   `<ul> ${activityConsecutiveDays[index]}</ul>`
   consecutiveStepGoalDays(activityConsecutiveDays)
   
 }
