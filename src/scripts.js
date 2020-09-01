@@ -139,10 +139,11 @@ function compareDayActivity() {
 function displayConsecutiveDays() {
   let consecutiveActivityDays = document.querySelector('.consecutive-days')
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
-  activityConsecutiveDays.forEach((day, index) => {
-    consecutiveActivityDays.innerHTML +=
-    `<ul> ${activityConsecutiveDays[index]}</ul>`
-  })
+  // activityConsecutiveDays.forEach((day, index) => {
+  //   consecutiveActivityDays.innerHTML +=
+  //   `<ul> ${activityConsecutiveDays[index]}</ul>`
+  consecutiveStepGoalDays(activityConsecutiveDays)
+  
 }
 function hydrationGraph(hydrationData) {
   let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces, }))
@@ -271,4 +272,24 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
     }]
   });
   chart.render();
-  }
+}
+function consecutiveStepGoalDays(activityConsecutiveDays) {
+  let dataPoints1 = []
+  let date = ''
+  activityConsecutiveDays.forEach(day => {
+    (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
+  })
+  let chart = new CanvasJS.Chart("consecutive-days", {
+    animationEnabled: true,
+    theme: "dark2",
+    title:{
+      text: "Your Hot Streaks (3 consecutive step increases)"
+    },
+    data: [{        
+      type: "line",
+      indexLabelFontSize: 10,
+      dataPoints: dataPoints1
+    }]
+  });
+  chart.render();
+}
