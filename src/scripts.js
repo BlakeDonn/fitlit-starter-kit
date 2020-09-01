@@ -276,6 +276,7 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
 function consecutiveStepGoalDays(activityConsecutiveDays) {
   let dataPoints1 = []
   let date = ''
+  console.log(activityConsecutiveDays.length)
   activityConsecutiveDays.forEach(day => {
     (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
   })
@@ -285,9 +286,13 @@ function consecutiveStepGoalDays(activityConsecutiveDays) {
     title:{
       text: "Your Hot Streaks (3 consecutive step increases)"
     },
+    axisX:{
+      interval: 1,
+      labelFontSize: 12
+    },
     data: [{        
       type: "line",
-      indexLabelFontSize: 10,
+      indexLabelFontSize: 4,
       dataPoints: dataPoints1
     }]
   });
