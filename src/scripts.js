@@ -18,7 +18,7 @@ function onLoad() {
   displayWeeklyActivity();
   compareDayActivity();
   displayConsecutiveDays()
-  stepDoughnutGraph();
+  createDoughnutProperties();
 }
 
 function chooseRandomUser() {
@@ -40,12 +40,6 @@ function displayUserInfo() {
 function compareUsersSteps() {
   userRepository = new UserRepository(userData)
   activity = new Activity(activityData);
-  console.log("D", activity.getDayData("2019/06/15", user.userData.id).numSteps)
-  let userComparisons = document.querySelector('.compare-user-steps')
-  userComparisons.innerHTML +=
-    `<p class="your-daily-step-count">Your daily step count is: ${activity.getDayData("2019/06/15", user.userData.id).numSteps}</p>
-    <p class="your-daily-step-goal">Your daily step goal is: ${user.userData.dailyStepGoal}</p>
-    `
 }
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
@@ -145,10 +139,10 @@ function hydrationGraph(hydrationData) {
       fontColor: "#EBECF0",
     },
     axisX:{
-        labelFontColor: "#EBECF0"
-      },
+      labelFontColor: "#EBECF0"
+    },
     axisY:{
-        labelFontColor: "#EBECF0"
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
@@ -323,29 +317,46 @@ function consecutiveStepGoalDays(activityConsecutiveDays) {
   });
   chart.render();
 }
-
-function stepDoughnutGraph() {
+function createDoughnutProperties() {
+  let stepData = activity.getDayData("2019/06/15", user.userData.id).numSteps;
+  let stepGoal = user.userData.dailyStepGoal;
+  let displayMessage;
+  let titleText;
+  let legendStats;
+  if (stepGoal > stepData) {
+    stepGoal = stepGoal - stepData
+    displayMessage = `${stepGoal} steps left to go!`
+    titleText = 'Keep On Steppin!'
+    legendStatus = true;
+  } else {
+    displayMessage = `${stepData - stepGoal} steps above your goal!`;
+    stepGoal = 0;
+    titleText = 'You Crushed Your Step Goal!'
+    legendStatus = false;
+  }
+  stepDoughnutGraph(stepData,  stepGoal, displayMessage, titleText, legendStatus)
+}
+  function stepDoughnutGraph (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
   var chart = new CanvasJS.Chart("doughnutChart",{
-  backgroundColor: "#1D222E",
+    backgroundColor: "#1D222E",
     title:{
-      text: "Steps Walked vs Step Goal",
+      text: titleText,
+      fontColor: "#EBECF0"
+    },
+    legend: {
       fontColor: "#EBECF0"
     },
     data: [
-    {
-     indexLabelFontColor: "#EBECF0",
-     type: "doughnut",
-     dataPoints: [
-     // {  y: 100, indexLabel: "Steps Walked" },
-     // {  y: 35.0, indexLabel: "StepGoal" },
-     // { label: sleepData[0].date, y: sleepData[0].sleepQuality },
-
-     {  y: activity.getDayData("2019/06/15", user.userData.id).numSteps, indexLabel: "Steps Walked", color: "#9CBB58"},
-     {  y: user.userData.dailyStepGoal, indexLabel: "StepGoal", color: "#23BFAA"}
-     ]
-   },
-   ]
- });
-
+      {
+        indexLabelFontColor: "#EBECF0",
+        type: "doughnut",
+        showInLegend: legendStatus,
+        dataPoints: [
+          {  y: stepData, indexLabel: `${stepData} Steps Walked`, color: "#9CBB58", legendText: "Steps So Far Today" },
+          {  y: stepGoal, indexLabel: displayMessage, color: "#23BFAA", legendText: "Your Step Goal"}
+        ]
+      },
+    ]
+  });
   chart.render();
 }
