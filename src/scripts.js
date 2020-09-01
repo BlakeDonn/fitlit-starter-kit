@@ -13,7 +13,7 @@ function onLoad() {
   displayWeeklyConsumption();
   displayDailySleep();
   displayWeeklySleep();
-  allTimeSleep();
+  // allTimeSleep();
   displayDayActivity();
   displayWeeklyActivity();
   compareDayActivity();
@@ -34,6 +34,7 @@ function displayUserInfo() {
     <p class="user-address">${user.userData.address}</p>
     <p class="user-email">${user.userData.email}</p>
     <p class="stride-length">Your stride length is : ${user.userData.strideLength} feet</p>
+    <p class="user-friends">Your Friends:</p>
     `
 }
 function compareUsersSteps() {
@@ -45,9 +46,16 @@ function makeFriendList() {
   console.log("X", userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`))
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
 }
+
+// "afterbegin"
+// "afterend"
+// "beforebegin"
+// "beforeend"
+
+
 function displayFriendList() {
-  let friendList = document.querySelector('.stride-length')
-  friendList.insertAdjacentHTML('beforeEnd', this.makeFriendList())
+  let friendList = document.querySelector('.user-friends')
+  friendList.insertAdjacentHTML('afterend', this.makeFriendList())
 }
 function displayWaterConsumption() {
   hydrationRepository = new HydrationRepository(hydrationData);
@@ -69,6 +77,13 @@ function displayDailySleep() {
   <p> Today's sleep data:
   Hours Slept ${sleep.daySleep("2019/06/15", user.userData.id).hoursSlept}
   Sleep Quality ${sleep.daySleep("2019/06/15", user.userData.id).sleepQuality}
+  <h2>Sleep Data For All Time</h2>
+  <p> All time sleep data:
+    All time Average Hours Slept
+    ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
+    All time Average Sleep Quality
+    ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
+  </p>
   </p>
   `
 }
@@ -77,21 +92,21 @@ function displayWeeklySleep() {
   sleepGraph(sleepWeekly)
   sleepAmountGraph(sleepWeekly)
 }
-function allTimeSleep() {
-  let sleepAllTime = document.querySelector('.all-time-sleep-card')
-  sleepAllTime.innerHTML +=
-  `<h2>Sleep Data For All Time</h2>
-  <p> All time sleep data:
-    All time Average Hours Slept
-    ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
-    All time Average Sleep Quality
-    ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
-  </p>
-  `
-}
+// function allTimeSleep() {
+//   let sleepAllTime = document.querySelector('.all-time-sleep-card')
+//   sleepAllTime.innerHTML +=
+//   `<h2>Sleep Data For All Time</h2>
+//   <p> All time sleep data:
+//     All time Average Hours Slept
+//     ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
+//     All time Average Sleep Quality
+//     ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
+//   </p>
+//   `
+// }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
-  dayActivity.innerHTML +=  
+  dayActivity.innerHTML +=
   `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
   <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
@@ -127,7 +142,7 @@ function compareDayActivity() {
 function displayConsecutiveDays() {
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
   consecutiveStepGoalDays(activityConsecutiveDays)
-  
+
 }
 function createDoughnutProperties() {
   let stepData = activity.getDayData("2019/06/15", user.userData.id).numSteps;
@@ -301,9 +316,9 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
       interval: pickedInterval,
       minimum: 0
     },
-    data: [{        
-      type: "column",  
-      dataPoints: [      
+    data: [{
+      type: "column",
+      dataPoints: [
         { y: allProperty, label: "You" },
         { y: userProperty,  label: "User Average" },
       ]
@@ -327,7 +342,7 @@ function consecutiveStepGoalDays(activityConsecutiveDays) {
       interval: 1,
       labelFontSize: 12
     },
-    data: [{        
+    data: [{
       type: "line",
       indexLabelFontSize: 4,
       dataPoints: dataPoints1
