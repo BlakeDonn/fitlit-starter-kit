@@ -17,6 +17,7 @@ function onLoad() {
   displayDayActivity();
   displayWeeklyActivity();
   compareDayActivity();
+  displayConsecutiveDays()
   stepDoughnutGraph();
 }
 
@@ -90,7 +91,6 @@ function displayDailySleep() {
 
 function displayWeeklySleep() {
   let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
-  console.log(sleepWeekly)
   sleepGraph(sleepWeekly)
   sleepAmountGraph(sleepWeekly)
 }
@@ -109,16 +109,16 @@ function allTimeSleep() {
 }
 
 function displayDayActivity() {
-  activity = new Activity(activityData);
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
-  `<h2>Activity Data For The Day</h2>
-  <p> Daily Activity Data:
+  `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
+  <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
     ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
-    Today's mintues active data
-    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}
-    Today's distance walked data
+    </p>
+    <p class="day-activity today-minutes-active">Today's mintues active data
+    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}</p>
+    <p class="day-activity today-distance-walked">Today's distance walked data
     ${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}
   </p>
   `
@@ -126,7 +126,6 @@ function displayDayActivity() {
 
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties("2019/06/15", user.userData.id)
-  console.log(weeklyActivity)
   weeklyStepCountGraph(weeklyActivity)
   weeklyStairFlightsClimbed(weeklyActivity)
   weeklyMinutesActive(weeklyActivity)
@@ -151,6 +150,18 @@ function compareDayActivity() {
   </p>
   `
 }
+
+
+
+function displayConsecutiveDays() {
+  let consecutiveActivityDays = document.querySelector('.consecutive-days')
+  let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
+  activityConsecutiveDays.forEach((day, index) => {
+    consecutiveActivityDays.innerHTML +=
+    `<ul> ${activityConsecutiveDays[index]}</ul>`
+  })
+}
+
 
 
 
