@@ -51,6 +51,10 @@
   padding: 20px;
 }
 
+.stride-length-solo {
+  border-bottom: 2px solid #EBECF0;
+}
+
 .your-daily-step-goal {
   text-align: center;
 }
@@ -61,6 +65,16 @@
 
 .compare-user-steps {
   border: 1px solid black;
+
+}
+
+.friend-names {
+  font-style: italic;
+}
+
+.user-friends {
+  border-bottom: 2px solid #EBECFO;
+  font-size: large;
 
 }
 

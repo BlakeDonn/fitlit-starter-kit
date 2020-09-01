@@ -35,6 +35,7 @@ function displayUserInfo() {
     <p class="user-address">${user.userData.address}</p>
     <p class="user-email">${user.userData.email}</p>
     <p class="stride-length">Your stride length is : ${user.userData.strideLength} feet</p>
+    <p class="user-friends">Your Friends:</p>
     `
 }
 function compareUsersSteps() {
@@ -52,9 +53,16 @@ function makeFriendList() {
   console.log("X", userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`))
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
 }
+
+// "afterbegin"
+// "afterend"
+// "beforebegin"
+// "beforeend"
+
+
 function displayFriendList() {
-  let friendList = document.querySelector('.stride-length')
-  friendList.insertAdjacentHTML('beforeEnd', this.makeFriendList())
+  let friendList = document.querySelector('.user-friends')
+  friendList.insertAdjacentHTML('afterend', this.makeFriendList())
 }
 function displayWaterConsumption() {
   hydrationRepository = new HydrationRepository(hydrationData);
@@ -98,7 +106,7 @@ function allTimeSleep() {
 }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
-  dayActivity.innerHTML +=  
+  dayActivity.innerHTML +=
   `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
   <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
@@ -134,7 +142,7 @@ function compareDayActivity() {
 function displayConsecutiveDays() {
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
   consecutiveStepGoalDays(activityConsecutiveDays)
-  
+
 }
 function hydrationGraph(hydrationData) {
   let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces, }))
@@ -289,9 +297,9 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
       interval: pickedInterval,
       minimum: 0
     },
-    data: [{        
-      type: "column",  
-      dataPoints: [      
+    data: [{
+      type: "column",
+      dataPoints: [
         { y: allProperty, label: "You" },
         { y: userProperty,  label: "User Average" },
       ]
@@ -315,7 +323,7 @@ function consecutiveStepGoalDays(activityConsecutiveDays) {
       interval: 1,
       labelFontSize: 12
     },
-    data: [{        
+    data: [{
       type: "line",
       indexLabelFontSize: 4,
       dataPoints: dataPoints1
