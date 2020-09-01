@@ -13,13 +13,12 @@ class HydrationRepository {
     return Math.round(allTimeOunces / userHydration.length);
   }
   dayOunces(dateSelected, id) {
-    return this.hydrationSet.find(day => day.date === dateSelected && day.userID === id).numOunces;
+    return this.hydrationSet.find(day => day.date === dateSelected && day.userID === id);
   }
-  dailyOuncesPerGivenWeek(startDate, id) {
-    let allUserHydrationData = this.userHydrationData(id);
-    let startingDate = this.hydrationSet.find(day => day.date === startDate);
-    let firstDay = this.hydrationSet.indexOf(startingDate);
-    return allUserHydrationData.slice(firstDay, firstDay + 7).map(day => ({date: day.date, ounces: day.numOunces}))
+  weeklyActivityProperties(dateSelected, id) {
+    let startingDate = this.dayOunces(dateSelected, id);
+    let firstDay = this.userHydrationData(id).indexOf(startingDate);
+    return this.userHydrationData(id).slice(firstDay - 6, firstDay + 1).map(day => ({date: day.date, numOunces: day.numOunces,}))
   }
 }
 if (typeof module !== 'undefined') {

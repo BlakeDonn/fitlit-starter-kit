@@ -2,11 +2,9 @@ class Sleep {
   constructor(sleepSet) {
     this.sleepSet = sleepSet
   }
-
   userSleepData(id) {
     return this.sleepSet.filter(dailySleep => dailySleep.userID === id);
   }
-
   averageAllTimeSleep(id, property) {
     let getUserData = this.userSleepData(id)
     let allTimeSleep = getUserData.reduce((sleep, day) =>{
@@ -14,16 +12,14 @@ class Sleep {
     }, 0)
     return Math.round((allTimeSleep / getUserData.length) * 10) / 10
   }
-
   daySleep(dateSelected, id) {
     let dayData = this.sleepSet.find(day => day.date === dateSelected && day.userID === id);
     return dayData
   }
-
   weeklySleepProperties(dateSelected, id,) {
     let startingDate = this.daySleep(dateSelected, id);
     let firstDay = this.userSleepData(id).indexOf(startingDate);
-    return this.userSleepData(id).slice(firstDay, firstDay + 7).map(day => ({date: day.date, hoursSlept: day.hoursSlept,  sleepQuality: day.sleepQuality}))
+    return this.userSleepData(id).slice(firstDay - 6, firstDay + 1).map(day => ({date: day.date, hoursSlept: day.hoursSlept,  sleepQuality: day.sleepQuality}))
 
   }
   averageSleepQuality() {
