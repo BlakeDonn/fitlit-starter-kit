@@ -38,8 +38,6 @@ function displayUserInfo() {
     <p>Steps: ${user.userData.dailyStepGoal} steps per day</p>
     <p class="friend-names">Friends: ${user.userData.friends}</p>`
 }
-
-
 function compareUsersSteps() {
   userRepository = new UserRepository(userData)
   let userComparisons = document.querySelector('.compare-user-steps')
@@ -48,19 +46,15 @@ function compareUsersSteps() {
     <p>Your daily step goal is: ${user.userData.dailyStepGoal}</p>
     <p>All users daily step goal is: ${userRepository.getAvgStepGoal()}</p>`
 }
-
-
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
   //userFriends is an array of three names
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`)
 }
-
 function displayFriendList() {
   let friendList = document.querySelector('.friend-names')
   friendList.insertAdjacentHTML('afterBegin', this.makeFriendList(this.user, this.userRepo))
 }
-
 function displayWaterConsumption() {
   hydrationRepository = new HydrationRepository(hydrationData);
   let waterConsumption = document.querySelector('.user-hydration-card')
@@ -69,12 +63,10 @@ function displayWaterConsumption() {
     <p> Today's water consumption:
     ${hydrationRepository.dayOunces("2019/06/15", user.userData.id)}oz</p>`
 }
-
 function displayWeeklyConsumption() {
   let userHydrationData = hydrationRepository.dailyOuncesPerGivenWeek("2019/06/15", user.userData.id)
   hydrationGraph(userHydrationData);
 }
-
 function displayDailySleep() {
   sleep = new Sleep(sleepData)
   let sleepProperties = document.querySelector('.day-sleep-card')
@@ -86,14 +78,11 @@ function displayDailySleep() {
   </p>
   `
 }
-
 function displayWeeklySleep() {
   let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
-  console.log(sleepWeekly)
   sleepGraph(sleepWeekly)
   sleepAmountGraph(sleepWeekly)
 }
-
 function allTimeSleep() {
   let sleepAllTime = document.querySelector('.all-time-sleep-card')
   sleepAllTime.innerHTML +=
@@ -106,24 +95,21 @@ function allTimeSleep() {
   </p>
   `
 }
-
 function displayDayActivity() {
   activity = new Activity(activityData);
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
   `<h2>Activity Data For The Day</h2>
-  <p class="day-activity today-step-data"> Daily Activity Data:
+  <p> Daily Activity Data:
     Today's step data
     ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
-    </p>
-    <p class="day-activity today-minutes-active">Today's mintues active data
-    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}</p>
-    <p class="day-activity today-distance-walked">Today's distance walked data
+    Today's mintues active data
+    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}
+    Today's distance walked data
     ${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}
   </p>
   `
 }
-
 // function displayWeeklySleep() {
 //   let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
 //   sleepGraph(sleepWeekly)
@@ -131,34 +117,25 @@ function displayDayActivity() {
 // }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties("2019/06/15", user.userData.id)
-  console.log(weeklyActivity)
   weeklyStepCountGraph(weeklyActivity)
   weeklyStairFlightsClimbed(weeklyActivity)
   weeklyMinutesActive(weeklyActivity)
 
 }
-
 function compareDayActivity() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
   let activityFindAllUsers = activity.findDayActivity("2019/06/15")
+  let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
   compareDayActivity .innerHTML +=
-  `<h2>Activity Data For The Day Compared To All Users</h2>
-  <p> Daily Activity Data Comparison:
-    Average step data compared to all users
-    Your Average ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
-    All Users Average ${activityFindAllUsers.numSteps}</br>
-    Average mintues active data compared to all users
-    Your Average ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}
-    All Users Average ${activityFindAllUsers.minutesActive}</br>
-    Average flights of stairs climbed data compared to all users
-    Your Average ${activity.getDayData("2019/06/15", user.userData.id).flightsOfStairs}
-    All Users Average ${activityFindAllUsers.flightsOfStairs}
-  </p>
+  `<h2 class="comparison-activity-header">You vs the World</h2>
+  <p class="comparison-steps-card" id ="comparison-steps"></p>
+  <p class="comparison-minutes-card" id ="comparison-minutes"></p>
+  <p class="comparison-flights-card" id ="comparison-flights"></p>
   `
+  dailyComparisonActivity(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
+  dailyComparisonActivity(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
+  dailyComparisonActivity(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
-
-
-
 function displayConsecutiveDays() {
   let consecutiveActivityDays = document.querySelector('.consecutive-days')
   let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
@@ -167,14 +144,10 @@ function displayConsecutiveDays() {
     `<ul> ${activityConsecutiveDays[index]}</ul>`
   })
 }
-
-
-
-
 function hydrationGraph(hydrationData) {
-  let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces,}))
+  let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces, }))
   let hydrationChart = new CanvasJS.Chart("chartContainer", {
-    title:{
+    title: {
       text: "Your Weekly Hydration Data in Ounces"
     },
     data: [
@@ -187,14 +160,12 @@ function hydrationGraph(hydrationData) {
   });
   hydrationChart.render();
 }
-
 function sleepGraph(sleepData) {
-  console.log(sleepData)
   let sleepQualityChart = new CanvasJS.Chart("sleepChartContainer", {
-    title:{
+    title: {
       text: "Your Weekly Sleep Quality Data"
     },
-    data:[
+    data: [
       {
         type: "column",
         dataPoints: [
@@ -211,7 +182,6 @@ function sleepGraph(sleepData) {
   });
   sleepQualityChart.render();
 }
-
 function sleepAmountGraph(sleepData) {
   let sleepAmountChart = new CanvasJS.Chart('sleepChartAmountContainer', {
     title: {
@@ -234,7 +204,6 @@ function sleepAmountGraph(sleepData) {
   })
   sleepAmountChart.render();
 }
-
 function weeklyStepCountGraph(activityData) {
   let dataPoint = activityData.map(data => ({label: data.date, y: data.stepCount}))
   let stepCountChart = new CanvasJS.Chart('stepCountWeeklyChart', {
@@ -250,7 +219,6 @@ function weeklyStepCountGraph(activityData) {
   })
   stepCountChart.render();
 }
-
 function weeklyStairFlightsClimbed(activityData) {
   let dataPoint = activityData.map(data => ({label: data.date, y: data.flightsOfStairsClimbed}))
   let flightsClimbedChart = new CanvasJS.Chart('flightsClimbedChart', {
@@ -266,7 +234,6 @@ function weeklyStairFlightsClimbed(activityData) {
   })
   flightsClimbedChart.render();
 }
-
 function weeklyMinutesActive(activityData) {
   let dataPoint = activityData.map(data => ({label: data.date, y: data.minutesActive}))
   let minutesActiveChart = new CanvasJS.Chart('minutesActiveChart', {
@@ -282,5 +249,26 @@ function weeklyMinutesActive(activityData) {
   })
   minutesActiveChart.render()
 }
-
-//For a user, a weekly view of their step count, flights of stairs climbed, and minutes active
+function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInterval ) {
+  let chart = new CanvasJS.Chart(id, {
+    animationEnabled: true,
+    theme: 'dark1',
+    title: {
+      text: `Daily ${name}`
+    },
+    dataPointWidth: 65,
+    axisY: {
+      title: name,
+      interval: pickedInterval,
+      minimum: 0
+    },
+    data: [{        
+      type: "column",  
+      dataPoints: [      
+        { y: allProperty, label: "You" },
+        { y: userProperty,  label: "User Average" },
+      ]
+    }]
+  });
+  chart.render();
+  }
