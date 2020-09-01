@@ -13,7 +13,7 @@ function onLoad() {
   displayWeeklyConsumption();
   displayDailySleep();
   displayWeeklySleep();
-  allTimeSleep();
+  // allTimeSleep();
   displayDayActivity();
   displayWeeklyActivity();
   compareDayActivity();
@@ -84,6 +84,13 @@ function displayDailySleep() {
   <p> Today's sleep data:
   Hours Slept ${sleep.daySleep("2019/06/15", user.userData.id).hoursSlept}
   Sleep Quality ${sleep.daySleep("2019/06/15", user.userData.id).sleepQuality}
+  <h2>Sleep Data For All Time</h2>
+  <p> All time sleep data:
+    All time Average Hours Slept
+    ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
+    All time Average Sleep Quality
+    ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
+  </p>
   </p>
   `
 }
@@ -92,18 +99,18 @@ function displayWeeklySleep() {
   sleepGraph(sleepWeekly)
   sleepAmountGraph(sleepWeekly)
 }
-function allTimeSleep() {
-  let sleepAllTime = document.querySelector('.all-time-sleep-card')
-  sleepAllTime.innerHTML +=
-  `<h2>Sleep Data For All Time</h2>
-  <p> All time sleep data:
-    All time Average Hours Slept
-    ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
-    All time Average Sleep Quality
-    ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
-  </p>
-  `
-}
+// function allTimeSleep() {
+//   let sleepAllTime = document.querySelector('.all-time-sleep-card')
+//   sleepAllTime.innerHTML +=
+//   `<h2>Sleep Data For All Time</h2>
+//   <p> All time sleep data:
+//     All time Average Hours Slept
+//     ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
+//     All time Average Sleep Quality
+//     ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
+//   </p>
+//   `
+// }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
   dayActivity.innerHTML +=
