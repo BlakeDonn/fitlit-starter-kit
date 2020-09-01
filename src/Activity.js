@@ -19,7 +19,7 @@ class Activity {
   weeklyActivityProperties(dateSelected, id,) {
     let startingDate = this.getDayData(dateSelected, id);
     let firstDay = this.userActivityData(id).indexOf(startingDate);
-    return this.userActivityData(id).slice(firstDay - 6, firstDay + 1) .map(day => ({date: day.date, stepCount: day.numSteps,  flightsOfStairsClimbed: day.flightsOfStairs, minutesActive: day.minutesActive}))
+    return this.userActivityData(id).slice(firstDay - 6, firstDay + 1) .map(day => ({date: day.date, stepCount: day.numSteps,  flightsOfStairs: day.flightsOfStairs, minutesActive: day.minutesActive}))
   }
   walkedMilesPerDay(dateSelected, id) {
     let dayData = this.getDayData(dateSelected, id)
