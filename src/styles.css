@@ -39,6 +39,9 @@
 .day-sleep-card{
   border: 1px solid Brown;
   position: relative;
+  color: #EBECF0;
+  background: #1D222E;
+  text-align: center;
 }
 .week-sleep-card{
   border: 1px solid Brown;
@@ -224,13 +227,15 @@
   animation-timing-function: linear;
   filter: drop-shadow(0 0 0.75rem black);
   z-index: 2;
+  color:#EBECF0;
+  text-align: left;
 }
 
 @keyframes z-sleep {
   from{ transform: translateX(0)}
   to{ transform: translateX(85%)}
   0% {opacity: 0;}
-  20% {opacity: 1;}
-  50% {opacity: 0;}
+  20% {opacity: .3;}
+  70% {opacity: 0;}
   100% {opacity: 0;}
 }
