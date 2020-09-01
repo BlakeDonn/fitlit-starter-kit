@@ -38,6 +38,7 @@
 }
 .day-sleep-card{
   border: 1px solid Brown;
+  position: relative;
 }
 .week-sleep-card{
   border: 1px solid Brown;
@@ -125,6 +126,11 @@
 
 
 /* Activity data for the day */
+.activity-day-data-tile {
+  text-align: center;
+  color: #9BBB58
+}
+
 .day-activity {
   background-color: #1D222E;
   border-radius: .75rem;
@@ -134,16 +140,8 @@
   color: #EBECF0
 }
 
-.activity-day-data-tile {
-  text-align: center;
-  color: #9BBB58
-}
 
-
-
-
-
-
+/* Hydration wave */
 @keyframes move_wave {
     0% {
         transform: translateX(0) translateZ(0) scaleY(1)
@@ -212,4 +210,27 @@
 }
 .waveAnimation .waveBottom {
     animation: move_wave 15s linear infinite;
+}
+
+
+
+
+.zzz-sleep{
+  animation-duration: 20s;
+  animation-fill-mode: none;
+  animation-iteration-count: infinite;
+  animation-name: z-sleep;
+  animation-delay: 0;
+  animation-timing-function: linear;
+  filter: drop-shadow(0 0 0.75rem black);
+  z-index: 2;
+}
+
+@keyframes z-sleep {
+  from{ transform: translateX(0)}
+  to{ transform: translateX(85%)}
+  0% {opacity: 0;}
+  20% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 0;}
 }
