@@ -49,7 +49,7 @@ function displayWaterConsumption() {
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
     <p> Today's water consumption:
-    ${hydrationRepository.dayOunces("2019/06/15", user.userData.id)}oz</p>`
+    ${hydrationRepository.dayOunces("2019/06/15", user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
   let userHydrationData = hydrationRepository.weeklyHydrationProperties(hydrationRepository.hydrationSet[hydrationRepository.hydrationSet.length - 1].date, user.userData.id)
@@ -95,7 +95,7 @@ function displayDayActivity() {
 }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(activity.activitySet[activity.activitySet.length - 1].date, user.userData.id)
-  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount') 
+  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount')
   graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
@@ -191,6 +191,7 @@ function hotStreakGraphBuilder(activityConsecutiveDays) {
     (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
   })
   let chart = new CanvasJS.Chart("consecutive-days", {
+    backgroundColor: "#1D222E",
     animationEnabled: true,
     theme: "dark2",
     title:{
@@ -209,7 +210,7 @@ function hotStreakGraphBuilder(activityConsecutiveDays) {
   chart.render();
 }
 function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
-  var chart = new CanvasJS.Chart("doughnutChart",{
+  let chart = new CanvasJS.Chart("doughnutChart",{
     backgroundColor: "#1D222E",
     title:{
       text: titleText,
