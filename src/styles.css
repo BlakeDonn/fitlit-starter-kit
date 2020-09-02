@@ -2,6 +2,7 @@
   background-color: #1D222E;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 25% 50% 25%;
   padding: 1rem;
 }
 
@@ -22,7 +23,8 @@
 
 .user-name {
   border-bottom: 2px solid #EBECF0;
-  font-size: x-large;
+  font-size: 1.5em;
+  font-weight: bold;
   margin: 10px;
   padding: 10px;
 }
@@ -51,6 +53,10 @@
   padding: 20px;
 }
 
+.stride-length-solo {
+  border-bottom: 2px solid #EBECF0;
+}
+
 .your-daily-step-goal {
   text-align: center;
 }
@@ -64,8 +70,18 @@
 
 }
 
+.friend-names {
+  font-style: italic;
+}
+
+.user-friends {
+  border-bottom: 2px solid #EBECFO;
+  font-size: large;
+
+}
+
 .user-hydration-card{
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   position: relative;
   text-align: center;
   color: #1D222E;
@@ -82,7 +98,7 @@
   text-align: -webkit-center;
 }
 .day-sleep-card{
-  border: 1px solid Brown;
+  border: 10px solid #EBECF0;
   position: relative;
   color: #EBECF0;
   background: #1D222E;
@@ -223,7 +239,8 @@
         transform: translateX(-50%) translateZ(0) scaleY(1)
     }
 }
-.waveWrapper {
+.wave-wrapper {
+    border: 10px solid #EBECF0;
     overflow: hidden;
     position: absolute;
     left: 0;

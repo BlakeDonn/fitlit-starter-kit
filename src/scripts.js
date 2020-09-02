@@ -1,33 +1,33 @@
-
-
-
-
 window.addEventListener('load', onLoad);
 
 function onLoad() {
-  chooseRandomUser();
-  compareUsersSteps();
+  populateRepos();
+  displayGreeting();
   displayUserInfo();
   displayFriendList();
-  displayWaterConsumption();
+  displayDayConsumption();
   displayWeeklyConsumption();
-  displayDailySleep();
+  displayDaySleep();
   displayWeeklySleep();
-  allTimeSleep();
   displayDayActivity();
   displayWeeklyActivity();
-  compareDayActivity();
-  displayConsecutiveDays()
-  stepDoughnutGraph();
+  displayDayComparison();
+  displayHotStreak()
+  displayStepGoal();
+  
 }
-
-function chooseRandomUser() {
+function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
+  userRepository = new UserRepository(userData);
+  hydrationRepository = new HydrationRepository(hydrationData);
+  sleep = new Sleep(sleepData);
+  activity = new Activity(activityData);
+}
+function displayGreeting() {
   let greeting = document.querySelector('.user-profile-display')
   greeting.innerHTML = `Welcome, ${user.returnFirstName()}!`
 }
-
 function displayUserInfo() {
   let infoCard = document.querySelector('.user-info-card')
   infoCard.innerHTML +=
@@ -35,120 +35,136 @@ function displayUserInfo() {
     <p class="user-address">${user.userData.address}</p>
     <p class="user-email">${user.userData.email}</p>
     <p class="stride-length">Your stride length is : ${user.userData.strideLength} feet</p>
-    `
-}
-function compareUsersSteps() {
-  userRepository = new UserRepository(userData)
-  activity = new Activity(activityData);
-  console.log("D", activity.getDayData("2019/06/15", user.userData.id).numSteps)
-  let userComparisons = document.querySelector('.compare-user-steps')
-  userComparisons.innerHTML +=
-    `<p class="your-daily-step-count">Your daily step count is: ${activity.getDayData("2019/06/15", user.userData.id).numSteps}</p>
-    <p class="your-daily-step-goal">Your daily step goal is: ${user.userData.dailyStepGoal}</p>
+    <p class="user-friends">Your Friends:</p>
     `
 }
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
-  console.log("X", userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`))
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
 }
 function displayFriendList() {
-  let friendList = document.querySelector('.stride-length')
-  friendList.insertAdjacentHTML('beforeEnd', this.makeFriendList())
+  let friendList = document.querySelector('.user-friends')
+  friendList.insertAdjacentHTML('afterend', this.makeFriendList())
 }
-function displayWaterConsumption() {
-  hydrationRepository = new HydrationRepository(hydrationData);
+function displayDayConsumption() {
   let waterConsumption = document.querySelector('.user-hydration-card')
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
     <p> Today's water consumption:
-    ${hydrationRepository.dayOunces("2019/06/15", user.userData.id)}oz</p>`
+    ${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
-  let userHydrationData = hydrationRepository.dailyOuncesPerGivenWeek("2019/06/15", user.userData.id)
-  hydrationGraph(userHydrationData);
+  let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
+  weeklyDataGraphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
-function displayDailySleep() {
-  sleep = new Sleep(sleepData)
+function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
   sleepProperties.innerHTML +=
   `<h2>Sleep Data For The Day</h2>
   <p> Today's sleep data:
-  Hours Slept ${sleep.daySleep("2019/06/15", user.userData.id).hoursSlept}
-  Sleep Quality ${sleep.daySleep("2019/06/15", user.userData.id).sleepQuality}
-  </p>
-  `
-}
-function displayWeeklySleep() {
-  let sleepWeekly = sleep.weeklySleepProperties("2019/06/15", user.userData.id)
-  sleepGraph(sleepWeekly)
-  sleepAmountGraph(sleepWeekly)
-}
-function allTimeSleep() {
-  let sleepAllTime = document.querySelector('.all-time-sleep-card')
-  sleepAllTime.innerHTML +=
-  `<h2>Sleep Data For All Time</h2>
+  Hours Slept ${sleep.daySleep( user.userData.id).hoursSlept}
+  Sleep Quality ${sleep.daySleep(user.userData.id).sleepQuality}
+  <h2>Sleep Data For All Time</h2>
   <p> All time sleep data:
     All time Average Hours Slept
     ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
     All time Average Sleep Quality
     ${sleep.averageAllTimeSleep(user.userData.id, "sleepQuality")}
   </p>
+  </p>
   `
+}
+function displayWeeklySleep() {
+  let sleepWeekly = sleep.weeklySleepProperties(user.userData.id)
+  weeklyDataGraphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
+  weeklyDataGraphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
-  dayActivity.innerHTML +=  
+  dayActivity.innerHTML +=
   `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
   <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
-    ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
+    ${activity.dayData(user.userData.id).numSteps}
     </p>
     <p class="day-activity today-minutes-active">Today's mintues active data
-    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}</p>
+    ${activity.dayData(user.userData.id).minutesActive}</p>
     <p class="day-activity today-distance-walked">Today's distance walked data
-    ${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}
+    ${activity.dailyMilesWalked(user.userData.id)}
   </p>
   `
 }
 function displayWeeklyActivity() {
-  let weeklyActivity = activity.weeklyActivityProperties("2019/06/15", user.userData.id)
-  weeklyStepCountGraph(weeklyActivity)
-  weeklyStairFlightsClimbed(weeklyActivity)
-  weeklyMinutesActive(weeklyActivity)
+  let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
+  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
+  weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
+  weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
-function compareDayActivity() {
+function displayDayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
-  let activityFindAllUsers = activity.findDayActivity("2019/06/15")
-  let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
+  let allUsersDayAverage = activity.allUserAverage()
+  let userDailyData = activity.dayData(user.userData.id)
   compareDayActivity .innerHTML +=
   `<h2 class="comparison-activity-header">You vs the World</h2>
   <p class="comparison-steps-card" id ="comparison-steps"></p>
   <p class="comparison-minutes-card" id ="comparison-minutes"></p>
   <p class="comparison-flights-card" id ="comparison-flights"></p>
   `
-  dailyComparisonActivity(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
-  dailyComparisonActivity(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
-  dailyComparisonActivity(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
+  comparisonGraphBuilder(userDailyData.numSteps, allUsersDayAverage.numSteps, "comparison-steps", "Number of Steps", 2500)
+  comparisonGraphBuilder(userDailyData.minutesActive, allUsersDayAverage.minutesActive, "comparison-minutes", "Minutes Active", 50)
+  comparisonGraphBuilder(userDailyData.flightsOfStairs, allUsersDayAverage.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
-function displayConsecutiveDays() {
-  let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
-  consecutiveStepGoalDays(activityConsecutiveDays)
-  
+function displayHotStreak() {
+  let consecutiveDays = activity.consecutiveDays(user.userData.id,)
+  let data = []
+  consecutiveDays.forEach((day, i) => {
+    data.push({
+      lineColor: "#5081BC",
+      color: "#F79647",
+      type: "line",
+      lineThickness: 5,
+      indexLabelFontSize: 4,
+      dataPoints: [
+        {x: i, label: day[0].date.slice(-4), y: day[0].numSteps},
+        {x: i + 1, label: day[1].date.slice(-4), y: day[1].numSteps},
+        {x: i + 2, label: day[2].date.slice(-4), y: day[2].numSteps},
+      ]
+    })
+  })
+  hotStreakGraphBuilder(data)
 }
-function hydrationGraph(hydrationData) {
-  let dataPoint = hydrationData.map(x => ({label: x.date, y: x.ounces, }))
-  let hydrationChart = new CanvasJS.Chart("chartContainer", {
+function displayStepGoal() {
+  let stepData = activity.dayData(user.userData.id).numSteps;
+  let stepGoal = user.userData.dailyStepGoal;
+  let displayMessage;
+  let titleText;
+  let legendStatus;
+  if (stepGoal > stepData) {
+    stepGoal = stepGoal - stepData
+    displayMessage = `${stepGoal} steps left to go!`
+    titleText = 'Keep On Steppin!'
+    legendStatus = true;
+  } else {
+    displayMessage = `${stepData - stepGoal} steps above your goal!`;
+    stepGoal = 0;
+    titleText = 'You Crushed Your Step Goal!'
+    legendStatus = false;
+  }
+  stepGoalGraphBuilder(stepData,  stepGoal, displayMessage, titleText, legendStatus)
+}
+function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
+  let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
+  let hydrationChart = new CanvasJS.Chart(chartName, {
     backgroundColor: "#1D222E",
     title:{
-      text: "Your Weekly Hydration Data in Ounces",
+      text: title,
       fontColor: "#EBECF0",
     },
     axisX:{
-        labelFontColor: "#EBECF0"
-      },
+      labelFontColor: "#EBECF0"
+    },
     axisY:{
-        labelFontColor: "#EBECF0"
+      labelFontColor: "#EBECF0"
     },
     data: [
       {
@@ -160,123 +176,7 @@ function hydrationGraph(hydrationData) {
   });
   hydrationChart.render();
 }
-function sleepGraph(sleepData) {
-  console.log(sleepData)
-  let dataPoint = sleepData.map(x => ({label: x.date, y: x.sleepQuality}))
-  let sleepQualityChart = new CanvasJS.Chart("sleepChartContainer", {
-    backgroundColor: "#1D222E",
-    title:{
-      text: "Your Weekly Sleep Quality Data",
-      fontColor: "#EBECF0"
-    },
-    axisX:{
-      labelFontColor: "#EBECF0"
-    },
-    axisY:{
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  });
-  sleepQualityChart.render();
-}
-function sleepAmountGraph(sleepData) {
-  let dataPoint = sleepData.map(x => ({label: x.date, y: x.hoursSlept}))
-  let sleepAmountChart = new CanvasJS.Chart('sleepChartAmountContainer', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Sleep in Hours",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  sleepAmountChart.render();
-}
-function weeklyStepCountGraph(activityData) {
-  let dataPoint = activityData.map(data => ({label: data.date, y: data.stepCount}))
-  let stepCountChart = new CanvasJS.Chart('stepCountWeeklyChart', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Step Count Data",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  stepCountChart.render();
-}
-function weeklyStairFlightsClimbed(activityData) {
-  let dataPoint = activityData.map(data => ({label: data.date, y: data.flightsOfStairsClimbed}))
-  let flightsClimbedChart = new CanvasJS.Chart('flightsClimbedChart', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Flights of Stairs Climbed",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  flightsClimbedChart.render();
-}
-function weeklyMinutesActive(activityData) {
-  let dataPoint = activityData.map(data => ({label: data.date, y: data.minutesActive}))
-  let minutesActiveChart = new CanvasJS.Chart('minutesActiveChart', {
-    backgroundColor: "#1D222E",
-    title: {
-      text: "Your Weekly Minutes Active",
-      fontColor: "#EBECF0"
-    },
-    axisX: {
-      labelFontColor: "#EBECF0"
-    },
-    axisY: {
-      labelFontColor: "#EBECF0"
-    },
-    data: [
-      {
-        type: "column",
-        dataPoints: dataPoint
-      }
-    ]
-  })
-  minutesActiveChart.render()
-}
-function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInterval ) {
+function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInterval ) {
   let chart = new CanvasJS.Chart(id, {
     animationEnabled: true,
     theme: 'dark1',
@@ -289,9 +189,9 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
       interval: pickedInterval,
       minimum: 0
     },
-    data: [{        
-      type: "column",  
-      dataPoints: [      
+    data: [{
+      type: "column",
+      dataPoints: [
         { y: allProperty, label: "You" },
         { y: userProperty,  label: "User Average" },
       ]
@@ -299,53 +199,45 @@ function dailyComparisonActivity(allProperty, userProperty, id, name, pickedInte
   });
   chart.render();
 }
-function consecutiveStepGoalDays(activityConsecutiveDays) {
-  let dataPoints1 = []
-  console.log(activityConsecutiveDays.length)
-  activityConsecutiveDays.forEach(day => {
-    (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
-  })
+function hotStreakGraphBuilder(data) {
   let chart = new CanvasJS.Chart("consecutive-days", {
     animationEnabled: true,
-    theme: "dark2",
+    theme: "dark1",
     title:{
-      text: "Your Hot Streaks (3 consecutive step increases)"
+      text: "Your Hot Streaks"
     },
     axisX:{
       interval: 1,
       labelFontSize: 12
     },
-    data: [{        
-      type: "line",
-      indexLabelFontSize: 4,
-      dataPoints: dataPoints1
-    }]
+    axisY:{
+      minimum: 0,
+    },
+    data: data
   });
   chart.render();
 }
-
-function stepDoughnutGraph() {
+function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
   var chart = new CanvasJS.Chart("doughnutChart",{
-  backgroundColor: "#1D222E",
+    backgroundColor: "#1D222E",
     title:{
-      text: "Steps Walked vs Step Goal",
+      text: titleText,
+      fontColor: "#EBECF0"
+    },
+    legend: {
       fontColor: "#EBECF0"
     },
     data: [
-    {
-     indexLabelFontColor: "#EBECF0",
-     type: "doughnut",
-     dataPoints: [
-     // {  y: 100, indexLabel: "Steps Walked" },
-     // {  y: 35.0, indexLabel: "StepGoal" },
-     // { label: sleepData[0].date, y: sleepData[0].sleepQuality },
-
-     {  y: activity.getDayData("2019/06/15", user.userData.id).numSteps, indexLabel: "Steps Walked", color: "#9CBB58"},
-     {  y: user.userData.dailyStepGoal, indexLabel: "StepGoal", color: "#23BFAA"}
-     ]
-   },
-   ]
- });
-
+      {
+        indexLabelFontColor: "#EBECF0",
+        type: "doughnut",
+        showInLegend: legendStatus,
+        dataPoints: [
+          {  y: stepData, indexLabel: `${stepData} Steps Walked`, color: "#9CBB58", legendText: "Steps So Far Today" },
+          {  y: stepGoal, indexLabel: displayMessage, color: "#23BFAA", legendText: "Steps Left To Goal"}
+        ]
+      },
+    ]
+  });
   chart.render();
 }
