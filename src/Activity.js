@@ -85,7 +85,7 @@ class Activity {
       }
       if (day.numSteps > userActivityData[i - 1].numSteps &&
         userActivityData[i - 1].numSteps > userActivityData[i - 2].numSteps) {
-        streakDays.push({date: day.date, steps: day.numSteps})
+        streakDays.push(userActivityData.slice(i - 2, i + 1))
       }
     })
     return streakDays;

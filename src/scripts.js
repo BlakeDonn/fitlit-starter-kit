@@ -184,10 +184,19 @@ function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInter
   chart.render();
 }
 function hotStreakGraphBuilder(activityConsecutiveDays) {
-  let dataPoints1 = []
-  activityConsecutiveDays.forEach(day => {
-    (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
+  let data = []
+  activityConsecutiveDays.forEach((day, i) => {
+    data.push({
+      type: "line",
+      indexLabelFontSize: 4,
+      dataPoints: [
+        {x: i, label: day[0].date.slice(-4), y: day[0].numSteps},
+        {x: i + 1, label: day[1].date.slice(-4), y: day[1].numSteps},
+        {x : i + 2, label: day[2].date.slice(-4), y: day[2].numSteps},
+      ]
+    })
   })
+  console.log(data)
   let chart = new CanvasJS.Chart("consecutive-days", {
     animationEnabled: true,
     theme: "dark2",
@@ -198,11 +207,10 @@ function hotStreakGraphBuilder(activityConsecutiveDays) {
       interval: 1,
       labelFontSize: 12
     },
-    data: [{
-      type: "line",
-      indexLabelFontSize: 4,
-      dataPoints: dataPoints1
-    }]
+    axisY:{
+      minimum: 0,
+    },
+    data: data
   });
   chart.render();
 }
