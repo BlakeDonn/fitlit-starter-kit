@@ -1,9 +1,9 @@
 const chai = require("chai");
 const expect = chai.expect;
-const HydrationRepository = require("../src/HydrationRepository")
+const Hydration = require("../src/Hydration")
 
-describe("HydrationRepository", () => {
-  let sampleHydrationData, hydrationRepository, filterUser1, filterUser2, weeklyData;
+describe("Hydration", () => {
+  let sampleHydrationData, hydration, filterUser1, filterUser2, weeklyData;
   beforeEach(() => {
     sampleHydrationData = [ {
       "userID": 1,
@@ -59,37 +59,37 @@ describe("HydrationRepository", () => {
     filterUser1 = sampleHydrationData.slice(0, 7);
     filterUser2 = sampleHydrationData.slice(7, 10);
     weeklyData = { date: sampleHydrationData[0].date, ounces: sampleHydrationData[0].numOunces}
-    hydrationRepository = new HydrationRepository(sampleHydrationData);
+    hydration = new Hydration(sampleHydrationData);
   });
 
   it("should be a function", () => {
-    expect(HydrationRepository).to.be.a("function")
+    expect(Hydration).to.be.a("function")
   });
 
-  it("should be an instance of HydrationRepository", () => {
-    expect(hydrationRepository).to.be.an.instanceof(HydrationRepository)
+  it("should be an instance of Hydration", () => {
+    expect(hydration).to.be.an.instanceof(Hydration)
   });
 
   it("should store user hydration data", () => {
-    expect(hydrationRepository.userHydrationData(1)).to.be.deep.equal(filterUser1);
+    expect(hydrationy.userHydrationData(1)).to.be.deep.equal(filterUser1);
   });
 
   it("should store another users data", () => {
-    expect(hydrationRepository.userHydrationData(2)).to.be.deep.equal(filterUser2);
+    expect(hydration.userHydrationData(2)).to.be.deep.equal(filterUser2);
   });
 
   it("should return average all-time ounces per a user", () =>{
-    expect(hydrationRepository.averageAllTimeOunces(1)).to.be.equal(65)
+    expect(hydration.averageAllTimeOunces(1)).to.be.equal(65)
   });
 
   it("should should return ounces for a specified day", () =>{
-    expect(hydrationRepository.dayOunces("2019/06/16", 1)).to.equal(69)
+    expect(hydration.dayOunces("2019/06/16", 1)).to.equal(69)
   });
 
   it("should return daily ounces over 7 day period", () => {
-    expect(hydrationRepository.dailyOuncesPerGivenWeek("2019/06/15", 1)[0]).to.deep.equal(weeklyData)
+    expect(hydration.dailyOuncesPerGivenWeek("2019/06/15", 1)[0]).to.deep.equal(weeklyData)
   });
 
-  
+
 
 });
