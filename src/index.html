@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
-
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -13,7 +9,6 @@
     <title>Activity Tracker</title>
     <script type="text/javascript" src="../node_modules/chart.js/dist/Chart.js"></script>
     <script type="text/javascript" src="../node_modules/moment/moment.js"></script>
-
     <script type="text/javascript" src="../data/users.js"></script>
     <script type="text/javascript" src="../data/hydration.js"></script>
     <script type="text/javascript" src="../data/sleep.js"></script>
@@ -24,20 +19,13 @@
     <script type="text/javascript" src="./Sleep.js"></script>
     <script type="text/javascript" src="./Activity.js"></script>
     <script type="text/javascript" src="./scripts.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script> -->
-
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
-
     </script>
-
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-
-
   </head>
   <body class="layout">
-
     <h1 class="title">Activity Tracker</h1>
     <h2 class="user-profile-display">Welcome!</h2>
     <section class="weekly-hydration-card">
@@ -49,16 +37,21 @@
           <div class="carousel-cell"id="flightsClimbedChart" style="height: 300px; width: 100%;"></div>
           <div class="carousel-cell"id="minutesActiveChart" style="height: 300px; width: 100%;"></div>
       </div>
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+      <div id="chartContainer" style="height: 30px; width: 100%;"></div>
+      <h2 class="comparison-activity-header">You vs the World</h2>
+      <div class="carousel" data-flickity>
+          <div class="carousel-cell comparison-steps-card" id="comparison-steps" style="height: 300px; width: 100%;"></div>
+          <div class="carousel-cell comparison-minutes-card" id="comparison-minutes" style="height: 300px; width: 100%;"></div>
+          <div class="carousel-cell comparison-flights-card" id="comparison-flights" style="height: 300px; width: 100%;"></div>
+      </div>
+      <div id="chartContainer" style="height: 30px; width: 100%;"></div>
     </section>
     <section class="user-info-card">
     </section>
     <section class="compare-user-steps">
       <div id="doughnutChart" style="height: 300px; width: 100%;"></div>
-
     </section>
     <section class="user-hydration-card">
-
       <div class="wave-wrapper wave-animation">
         <div class="wave-wrapper-inner bgTop">
           <div class="wave wave-top" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
@@ -70,7 +63,6 @@
           <div class="wave wave-bottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
         </div>
       </div>
-      <!-- <canvas id="hydration-weekly-chart"></canvas> -->
     </section>
     <section class="day-sleep-card">
       <p class="zzz-sleep">Z...z...Z...z...Z...z...Z...z</p>
@@ -88,18 +80,8 @@
     </section>
     <section class="new-grid">
     <section class = comparison-activity-card>
-      <h2 class="comparison-activity-header">You vs the World</h2>
-
-      <div class="carousel" data-flickity>
-          <div class="carousel-cell comparison-steps-card" id="comparison-steps" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell comparison-minutes-card" id="comparison-minutes" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell comparison-flights-card" id="comparison-flights" style="height: 300px; width: 100%;"></div>
-      </div>
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-
     </section>
     <section class="consecutive-days-card" id="consecutive-days">
-      <!-- <h2 class="consecutive-days">Days of Consecutive Activity for Steps</h2> -->
     </section>
     </section>
   </body>

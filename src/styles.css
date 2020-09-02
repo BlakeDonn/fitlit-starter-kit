@@ -117,7 +117,6 @@
   position: relative;
 }
 .weekly-activity-card{
-  border: 1px solid Green;
 }
 .comparison-activity-card{
   border: 10px solid #EBECF0;
@@ -125,25 +124,23 @@
 
 }
 .comparison-activity-header{
-  border: 1px solid Green;
-  background: #5081BC;
+  background: #23BFAA;
   text-align: center;
 }
 .comparison-steps-card{
-  border: 1px solid Green;
   background: #8064A1;
 }
 .comparison-minutes-card{
-  border: 1px solid Green;
   background: #F79647
 }
 .comparison-flights-card{
-  border: 1px solid Green;
   background: #9CBB58;
 }
 
 .consecutive-days-card {
   border: 10px solid #EBECF0;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 .user-profile-display{
   background-color: #1D222E;
@@ -194,6 +191,10 @@
 .flickity-prev-next-button.next {
   right: -80px;
   background-color: #4AACC5;
+}
+
+.flickity-page-dots{
+  background: #23BFAA;
 }
 
 /* Activity data for the day */

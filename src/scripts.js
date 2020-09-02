@@ -167,6 +167,7 @@ function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   });
   hydrationChart.render();
 }
+
 function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInterval ) {
   let chart = new CanvasJS.Chart(id, {
     animationEnabled: true,
