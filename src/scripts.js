@@ -97,9 +97,9 @@ function displayDayActivity() {
 }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
-  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
-  graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
-  graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
+  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
+  weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
+  weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
 function displayDayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
@@ -137,7 +137,7 @@ function displayStepGoal() {
   }
   stepGoalGraphBuilder(stepData,  stepGoal, displayMessage, titleText, legendStatus)
 }
-function graphBuilder(userData, chartName, title, prop1) {
+function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
   let hydrationChart = new CanvasJS.Chart(chartName, {
     backgroundColor: "#1D222E",
