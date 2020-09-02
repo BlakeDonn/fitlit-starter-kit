@@ -76,8 +76,8 @@ function displayDaySleep() {
 }
 function displayWeeklySleep() {
   let sleepWeekly = sleep.weeklySleepProperties(user.userData.id)
-  graphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
-  graphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
+  weeklyDataGraphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
+  weeklyDataGraphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
