@@ -33,7 +33,10 @@ class Sleep {
     }, 0)
     return Math.round(average / this.sleepSet.length * 10) / 10;
   }
-  sleepQualityAboveThree(date) {
+  sleepQualityAboveThree(startingDate) {
+    if (!startingDate) {
+      startingDate = this.date
+    }
     let qualityAboveThree = [];
     let uniqueIds = Array.from(new Set(this.sleepSet.map(user => user.userID)))
     uniqueIds.forEach(id => {
@@ -47,12 +50,18 @@ class Sleep {
     })
     return qualityAboveThree
   }
-  userWhoSleptTheMost(targetDate) {
-    let sleepDataPerDay = this.sleepSet.filter(user => user.date === targetDate);
+  userWhoSleptTheMost(startingDate) {
+    if (!startingDate) {
+      startingDate = this.date
+    }
+    let sleepDataPerDay = this.sleepSet.filter(user => user.date === startingDate);
     let topSleeper = sleepDataPerDay.sort((a, b) => b.hoursSlept - a.hoursSlept);
     return topSleeper[0].userID;
   }
-  userWhoSleptTheLeast(targetDate) {
+  userWhoSleptTheLeast(startingDate) {
+    if (!startingDate) {
+      startingDate = this.date
+    }
     let sleepDataPerDay = this.sleepSet.filter(user => user.date === targetDate);
     let topSleeper = sleepDataPerDay.sort((a, b) => a.hoursSlept - b.hoursSlept);
     return topSleeper[0].userID;
