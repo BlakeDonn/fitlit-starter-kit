@@ -20,7 +20,7 @@ function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
   userRepository = new UserRepository(userData);
-  hydrationRepository = new HydrationRepository(hydrationData);
+  hydration = new Hydration(hydrationData);
   sleep = new Sleep(sleepData);
   activity = new Activity(activityData);
 }
@@ -51,10 +51,10 @@ function displayDayConsumption() {
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
     <p> Today's water consumption:
-    ${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
+    ${hydration.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
-  let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
+  let userHydrationData = hydration.weeklyHydrationProperties(user.userData.id)
   weeklyDataGraphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
 function displayDaySleep() {
@@ -93,7 +93,7 @@ function displayDayActivity() {
 }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
-  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
+  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps')
   weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
