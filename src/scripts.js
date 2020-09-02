@@ -1,23 +1,30 @@
 window.addEventListener('load', onLoad);
 
 function onLoad() {
-  chooseRandomUser();
-  compareUsersSteps();
+  populateRepos();
+  displayGreeting();
   displayUserInfo();
   displayFriendList();
-  displayWaterConsumption();
+  displayDayConsumption();
   displayWeeklyConsumption();
-  displayDailySleep();
+  displayDaySleep();
   displayWeeklySleep();
   displayDayActivity();
   displayWeeklyActivity();
-  displayComparison();
+  displayDayComparison();
   displayHotStreak()
   displayStepGoal();
+
 }
-function chooseRandomUser() {
+function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
+  userRepository = new UserRepository(userData);
+  hydrationRepository = new HydrationRepository(hydrationData);
+  sleep = new Sleep(sleepData);
+  activity = new Activity(activityData);
+}
+function displayGreeting() {
   let greeting = document.querySelector('.user-profile-display')
   greeting.innerHTML = `Welcome, ${user.returnFirstName()}!`
 }
@@ -31,10 +38,6 @@ function displayUserInfo() {
     <p class="user-friends">Your Friends:</p>
     `
 }
-function compareUsersSteps() {
-  userRepository = new UserRepository(userData)
-  activity = new Activity(activityData);
-}
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
@@ -43,26 +46,24 @@ function displayFriendList() {
   let friendList = document.querySelector('.user-friends')
   friendList.insertAdjacentHTML('afterend', this.makeFriendList())
 }
-function displayWaterConsumption() {
-  hydrationRepository = new HydrationRepository(hydrationData);
+function displayDayConsumption() {
   let waterConsumption = document.querySelector('.user-hydration-card')
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
     <p> Today's water consumption:
-    ${hydrationRepository.dayOunces("2019/06/15", user.userData.id).numOunces}oz</p>`
+    ${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
-  let userHydrationData = hydrationRepository.weeklyHydrationProperties(hydrationRepository.hydrationSet[hydrationRepository.hydrationSet.length - 1].date, user.userData.id)
-  graphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
+  let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
+  weeklyDataGraphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
-function displayDailySleep() {
-  sleep = new Sleep(sleepData)
+function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
   sleepProperties.innerHTML +=
   `<h2>Sleep Data For The Day</h2>
   <p> Today's sleep data:
-  Hours Slept ${sleep.daySleep("2019/06/15", user.userData.id).hoursSlept}
-  Sleep Quality ${sleep.daySleep("2019/06/15", user.userData.id).sleepQuality}
+  Hours Slept ${sleep.daySleep( user.userData.id).hoursSlept}
+  Sleep Quality ${sleep.daySleep(user.userData.id).sleepQuality}
   <h2>Sleep Data For All Time</h2>
   <p> All time sleep data:
     All time Average Hours Slept
@@ -74,9 +75,9 @@ function displayDailySleep() {
   `
 }
 function displayWeeklySleep() {
-  let sleepWeekly = sleep.weeklySleepProperties(sleep.sleepSet[sleep.sleepSet.length - 1].date, user.userData.id)
-  graphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
-  graphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
+  let sleepWeekly = sleep.weeklySleepProperties(user.userData.id)
+  weeklyDataGraphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
+  weeklyDataGraphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
@@ -96,7 +97,7 @@ function displayWeeklyActivity() {
   graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
-function displayComparison() {
+function displayDayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
   let activityFindAllUsers = activity.findDayActivity("2019/06/15")
   let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
@@ -105,16 +106,30 @@ function displayComparison() {
   comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
 function displayHotStreak() {
-  let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
-  hotStreakGraphBuilder(activityConsecutiveDays)
-
+  let consecutiveDays = activity.consecutiveDays(user.userData.id,)
+  let data = []
+  consecutiveDays.forEach((day, i) => {
+    data.push({
+      lineColor: "#5081BC",
+      color: "#F79647",
+      type: "line",
+      lineThickness: 5,
+      indexLabelFontSize: 4,
+      dataPoints: [
+        {x: i, label: day[0].date.slice(-4), y: day[0].numSteps},
+        {x: i + 1, label: day[1].date.slice(-4), y: day[1].numSteps},
+        {x: i + 2, label: day[2].date.slice(-4), y: day[2].numSteps},
+      ]
+    })
+  })
+  hotStreakGraphBuilder(data)
 }
 function displayStepGoal() {
-  let stepData = activity.getDayData("2019/06/15", user.userData.id).numSteps;
+  let stepData = activity.dayData(user.userData.id).numSteps;
   let stepGoal = user.userData.dailyStepGoal;
   let displayMessage;
   let titleText;
-  let legendStats;
+  let legendStatus;
   if (stepGoal > stepData) {
     stepGoal = stepGoal - stepData
     displayMessage = `${stepGoal} steps left to go!`
@@ -128,7 +143,7 @@ function displayStepGoal() {
   }
   stepGoalGraphBuilder(stepData,  stepGoal, displayMessage, titleText, legendStatus)
 }
-function graphBuilder(userData, chartName, title, prop1) {
+function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
   let hydrationChart = new CanvasJS.Chart(chartName, {
     backgroundColor: "#1D222E",
@@ -175,28 +190,22 @@ function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInter
   });
   chart.render();
 }
-function hotStreakGraphBuilder(activityConsecutiveDays) {
-  let dataPoints1 = []
-  console.log(activityConsecutiveDays.length)
-  activityConsecutiveDays.forEach(day => {
-    (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
-  })
+function hotStreakGraphBuilder(data) {
   let chart = new CanvasJS.Chart("consecutive-days", {
     backgroundColor: "#1D222E",
     animationEnabled: true,
-    theme: "dark2",
+    theme: "dark1",
     title:{
-      text: "Your Hot Streaks (3 consecutive step increases)"
+      text: "Your Hot Streaks"
     },
     axisX:{
       interval: 1,
       labelFontSize: 12
     },
-    data: [{
-      type: "line",
-      indexLabelFontSize: 4,
-      dataPoints: dataPoints1
-    }]
+    axisY:{
+      minimum: 0,
+    },
+    data: data
   });
   chart.render();
 }
