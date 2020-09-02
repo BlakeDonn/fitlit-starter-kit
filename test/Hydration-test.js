@@ -71,7 +71,7 @@ describe("Hydration", () => {
   });
 
   it("should store user hydration data", () => {
-    expect(hydrationy.userHydrationData(1)).to.be.deep.equal(filterUser1);
+    expect(hydration.userHydrationData(1)).to.be.deep.equal(filterUser1);
   });
 
   it("should store another users data", () => {

@@ -15,13 +15,13 @@ class Activity {
     return this.activitySet.filter(dailySleep => dailySleep.userID === id)
   }
   dayData(id, dateSelected) {
-    if(!dateSelected) {
+    if (!dateSelected) {
       dateSelected = this.date
     }
     return this.activitySet.find(day => day.date === dateSelected && day.userID === id);
   }
   weeklyActivityProperties(id, dateSelected) {
-    if(!dateSelected) { 
+    if (!dateSelected) {
       dateSelected = this.date
     }
     let lastDayInWeek = this.dayData(id, dateSelected);
@@ -29,7 +29,7 @@ class Activity {
     return this.userActivityData(id).slice(indexOfLastDay - 6, indexOfLastDay + 1)
   }
   dailyMilesWalked(id, dateSelected) {
-    if(!dateSelected) {
+    if (!dateSelected) {
       dateSelected = this.date
     }
     let userSet = this.dayData(id, dateSelected)

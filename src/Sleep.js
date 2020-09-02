@@ -7,7 +7,7 @@ class Sleep {
     return this.sleepSet.filter(dailySleep => dailySleep.userID === id);
   }
   daySleep(id, startingDate ) {
-    if(!startingDate) {
+    if (!startingDate) {
       startingDate = this.date;
     }
     return this.sleepSet.find(day => day.date === startingDate && day.userID === id);

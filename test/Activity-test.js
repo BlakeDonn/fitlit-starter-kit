@@ -117,35 +117,35 @@ describe("Activity", () => {
     expect(activity).to.be.an.instanceof(Activity);
   });
 
-  it("should return the miles a user has walked",() => {
+  it("should return the miles a user has walked", () => {
     expect(activity.walkedMilesPerDay("2019/06/15", 1)).to.be.equal(2.9);
   });
 
-  it("should return minutes active for specific day",() => {
+  it("should return minutes active for specific day", () => {
     expect(activity.minutesActivePerDay("2019/06/16", 1)).to.be.equal(175);
   });
 
-  it("should return average minutes active for a specific week",() => {
+  it("should return average minutes active for a specific week", () => {
     expect(activity.averageWeeklyMinutes("2019/06/15", 1, 'minutesActive')).to.be.equal(171.1);
   });
 
-  it("should check if user reached step goal for specific day",() => {
+  it("should check if user reached step goal for specific day", () => {
     expect(activity.stepGoalAchieved("2019/06/15", 1)).to.be.equal(false);
   });
-  
-  it("should check if user reached step goal for specific day",() => {
+
+  it("should check if user reached step goal for specific day", () => {
     expect(activity.stepGoalAchieved("2019/06/20", 1)).to.be.equal(true);
   });
 
-  it("should find all days where they reach step goal ",() => {
+  it("should find all days where they reach step goal ", () => {
     expect(activity.daysStepGoalAchieved(1)).to.be.deep.equal(["2019/06/17", "2019/06/20"]);
   });
 
-  it("should find a users all-time stair climbing record ",() => {
+  it("should find a users all-time stair climbing record ", () => {
     expect(activity.findStairRecord(1)).to.be.equal(36);
   });
 
-  it("should find users average stairs climbed, steps taken, minutes active, for specific date",() => {
+  it("should find users average stairs climbed, steps taken, minutes active, for specific date", () => {
     expect(activity.findDayActivity("2019/06/17", 1)).to.be.deep.equal({
       "numSteps": 14040,
       "minutesActive": 117,
@@ -153,11 +153,11 @@ describe("Activity", () => {
     });
   });
 
-  it("should return if a user achieved step goal for the week ",() => {
+  it("should return if a user achieved step goal for the week ", () => {
     expect(activity.weeklyStepGoal("2019/06/15", 1, 'numSteps')).to.be.equal(false);
   });
 
-  it("should return if a user achieved step goal for the week ",() => {
+  it("should return if a user achieved step goal for the week ", () => {
     expect(activity.consecutiveDays(1)).to.deep.equal(["2019/06/17"]);
   });
 
