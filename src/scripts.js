@@ -85,22 +85,22 @@ function displayDayActivity() {
   let minActive = document.querySelector('.today-minutes-active')
   let walkedMiles = document.querySelector('.today-distance-walked')
   stepData.innerHTML +=
-    `${activity.getDayData("2019/06/15", user.userData.id).numSteps}`
+    `${activity.dayData( user.userData.id).numSteps}`
   minActive.innerHTML +=
-    `${activity.getDayData("2019/06/15", user.userData.id).minutesActive}`
+    `${activity.dayData(user.userData.id).minutesActive}`
   walkedMiles.innerHTML +=
-    `${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}`
+    `${activity.dailyMilesWalked(user.userData.id)}`
 }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(activity.activitySet[activity.activitySet.length - 1].date, user.userData.id)
-  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount')
-  graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
-  graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
+  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount')
+  weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
+  weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
 function displayDayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
-  let activityFindAllUsers = activity.findDayActivity("2019/06/15")
-  let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
+  let activityFindAllUsers = activity.allUserAverage()
+  let activityUsers = activity.dayData(user.userData.id)
   comparisonGraphBuilder(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
   comparisonGraphBuilder(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
   comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
