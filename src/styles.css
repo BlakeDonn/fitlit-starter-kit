@@ -109,12 +109,12 @@
   border: 1px solid Brown;
 }
 .day-activity-card{
+  background: url(../images/park-5.png);
   border: 10px solid #EBECF0;
   grid-column-start: 1;
   grid-row-start: 2;
-  background-repeat: no-repeat;
-  background-size: 50%;
-  background: url(../images/park-5.png);
+  background-repeat: round;
+  background-size: cover;
   position: relative;
 }
 .weekly-activity-card{
