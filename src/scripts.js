@@ -14,6 +14,7 @@ function onLoad() {
   displayComparison();
   displayHotStreak()
   displayStepGoal();
+  
 }
 function chooseRandomUser() {
   const randomUserId = Math.floor(Math.random() * userData.length)
@@ -49,10 +50,11 @@ function displayWaterConsumption() {
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
     <p> Today's water consumption:
-    ${hydrationRepository.dayOunces("2019/06/15", user.userData.id)}oz</p>`
+    ${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
-  let userHydrationData = hydrationRepository.weeklyHydrationProperties(hydrationRepository.hydrationSet[hydrationRepository.hydrationSet.length - 1].date, user.userData.id)
+  let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
+  console.log(userHydrationData)
   graphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
 function displayDailySleep() {
@@ -61,8 +63,8 @@ function displayDailySleep() {
   sleepProperties.innerHTML +=
   `<h2>Sleep Data For The Day</h2>
   <p> Today's sleep data:
-  Hours Slept ${sleep.daySleep("2019/06/15", user.userData.id).hoursSlept}
-  Sleep Quality ${sleep.daySleep("2019/06/15", user.userData.id).sleepQuality}
+  Hours Slept ${sleep.daySleep( user.userData.id).hoursSlept}
+  Sleep Quality ${sleep.daySleep(user.userData.id).sleepQuality}
   <h2>Sleep Data For All Time</h2>
   <p> All time sleep data:
     All time Average Hours Slept
@@ -74,7 +76,7 @@ function displayDailySleep() {
   `
 }
 function displayWeeklySleep() {
-  let sleepWeekly = sleep.weeklySleepProperties(sleep.sleepSet[sleep.sleepSet.length - 1].date, user.userData.id)
+  let sleepWeekly = sleep.weeklySleepProperties(user.userData.id)
   graphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
   graphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
@@ -84,25 +86,25 @@ function displayDayActivity() {
   `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
   <p class="day-activity today-step-data"> Daily Activity Data:
     Today's step data
-    ${activity.getDayData("2019/06/15", user.userData.id).numSteps}
+    ${activity.dayData(user.userData.id).numSteps}
     </p>
     <p class="day-activity today-minutes-active">Today's mintues active data
-    ${activity.getDayData("2019/06/15", user.userData.id).minutesActive}</p>
+    ${activity.dayData(user.userData.id).minutesActive}</p>
     <p class="day-activity today-distance-walked">Today's distance walked data
-    ${activity.walkedMilesPerDay("2019/06/15", user.userData.id)}
+    ${activity.dailyMilesWalked(user.userData.id)}
   </p>
   `
 }
 function displayWeeklyActivity() {
-  let weeklyActivity = activity.weeklyActivityProperties(activity.activitySet[activity.activitySet.length - 1].date, user.userData.id)
-  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount') 
+  let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
+  graphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
   graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
 function displayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
-  let activityFindAllUsers = activity.findDayActivity("2019/06/15")
-  let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
+  let activityFindAllUsers = activity.findDayActivity()
+  let activityUsers = activity.dayData(user.userData.id)
   compareDayActivity .innerHTML +=
   `<h2 class="comparison-activity-header">You vs the World</h2>
   <p class="comparison-steps-card" id ="comparison-steps"></p>
@@ -119,7 +121,7 @@ function displayHotStreak() {
 
 }
 function displayStepGoal() {
-  let stepData = activity.getDayData("2019/06/15", user.userData.id).numSteps;
+  let stepData = activity.dayData(user.userData.id).numSteps;
   let stepGoal = user.userData.dailyStepGoal;
   let displayMessage;
   let titleText;
