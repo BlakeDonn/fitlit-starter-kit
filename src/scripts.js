@@ -193,6 +193,7 @@ function hotStreakGraphBuilder(activityConsecutiveDays) {
     (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
   })
   let chart = new CanvasJS.Chart("consecutive-days", {
+    backgroundColor: "#1D222E",
     animationEnabled: true,
     theme: "dark2",
     title:{
@@ -211,7 +212,7 @@ function hotStreakGraphBuilder(activityConsecutiveDays) {
   chart.render();
 }
 function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
-  var chart = new CanvasJS.Chart("doughnutChart",{
+  let chart = new CanvasJS.Chart("doughnutChart",{
     backgroundColor: "#1D222E",
     title:{
       text: titleText,

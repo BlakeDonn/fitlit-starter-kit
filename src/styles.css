@@ -1,9 +1,21 @@
-.layout {
+body {
   background-color: #1D222E;
+
+}
+
+
+.layout {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  /* grid-template-columns: 1fr 2fr 1fr; */
   grid-template-columns: 25% 50% 25%;
   padding: 1rem;
+}
+
+.new-grid {
+  /* grid-template: 1fr 1fr; */
+  grid-template-columns: 50% 50%;
+  display: grid;
+  width: 100%;
 }
 
 .title {
@@ -23,6 +35,7 @@
 
 .user-name {
   border-bottom: 2px solid #EBECF0;
+  color: #9BBB58;
   font-size: 1.5em;
   font-weight: bold;
   margin: 10px;
@@ -66,7 +79,7 @@
 }
 
 .compare-user-steps {
-  border: 1px solid black;
+  border: 10px solid #EBECF0;
 
 }
 
@@ -81,13 +94,11 @@
 }
 
 .user-hydration-card{
-  /* border: 1px solid blue; */
   position: relative;
   text-align: center;
   color: #1D222E;
   font-weight: 900;
   -webkit-text-stroke: 0.25px #EBECF0;
-  box-shadow: 0 8px 6px -6px black;
 }
 
 .weekly-hydration-card{
@@ -114,12 +125,13 @@
   border: 10px solid #EBECF0;
   grid-column-start: 1;
   grid-row-start: 2;
+  text-align: center;
 }
 .weekly-activity-card{
   border: 1px solid Green;
 }
 .comparison-activity-card{
-  border: 1px solid Green;
+  border: 10px solid #EBECF0;
   display: grid;
   grid-template-rows: .25fr 1.75fr 1.75fr 1.75fr;
 }
@@ -138,6 +150,10 @@
 .comparison-flights-card{
   border: 1px solid Green;
   background: #9CBB58;
+}
+
+.consecutive-days-card {
+  border: 10px solid #EBECF0;
 }
 .user-profile-display{
   background-color: #1D222E;
