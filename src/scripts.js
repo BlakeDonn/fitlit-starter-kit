@@ -1,24 +1,30 @@
 window.addEventListener('load', onLoad);
 
 function onLoad() {
-  chooseRandomUser();
-  compareUsersSteps();
+  populateRepos();
+  displayGreeting();
   displayUserInfo();
   displayFriendList();
-  displayWaterConsumption();
+  displayDayConsumption();
   displayWeeklyConsumption();
-  displayDailySleep();
+  displayDaySleep();
   displayWeeklySleep();
   displayDayActivity();
   displayWeeklyActivity();
-  displayComparison();
+  displayDayComparison();
   displayHotStreak()
   displayStepGoal();
   
 }
-function chooseRandomUser() {
+function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
+  userRepository = new UserRepository(userData);
+  hydrationRepository = new HydrationRepository(hydrationData);
+  sleep = new Sleep(sleepData);
+  activity = new Activity(activityData);
+}
+function displayGreeting() {
   let greeting = document.querySelector('.user-profile-display')
   greeting.innerHTML = `Welcome, ${user.returnFirstName()}!`
 }
@@ -32,10 +38,6 @@ function displayUserInfo() {
     <p class="user-friends">Your Friends:</p>
     `
 }
-function compareUsersSteps() {
-  userRepository = new UserRepository(userData)
-  activity = new Activity(activityData);
-}
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
@@ -44,8 +46,7 @@ function displayFriendList() {
   let friendList = document.querySelector('.user-friends')
   friendList.insertAdjacentHTML('afterend', this.makeFriendList())
 }
-function displayWaterConsumption() {
-  hydrationRepository = new HydrationRepository(hydrationData);
+function displayDayConsumption() {
   let waterConsumption = document.querySelector('.user-hydration-card')
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
@@ -57,8 +58,7 @@ function displayWeeklyConsumption() {
   console.log(userHydrationData)
   graphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
-function displayDailySleep() {
-  sleep = new Sleep(sleepData)
+function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
   sleepProperties.innerHTML +=
   `<h2>Sleep Data For The Day</h2>
@@ -101,31 +101,29 @@ function displayWeeklyActivity() {
   graphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   graphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
-function displayComparison() {
+function displayDayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
-  let activityFindAllUsers = activity.findDayActivity()
-  let activityUsers = activity.dayData(user.userData.id)
+  let allUsersDayAverage = activity.allUserAverage()
+  let userDailyData = activity.dayData(user.userData.id)
   compareDayActivity .innerHTML +=
   `<h2 class="comparison-activity-header">You vs the World</h2>
   <p class="comparison-steps-card" id ="comparison-steps"></p>
   <p class="comparison-minutes-card" id ="comparison-minutes"></p>
   <p class="comparison-flights-card" id ="comparison-flights"></p>
   `
-  comparisonGraphBuilder(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
-  comparisonGraphBuilder(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
-  comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
+  comparisonGraphBuilder(userDailyData.numSteps, allUsersDayAverage.numSteps, "comparison-steps", "Number of Steps", 2500)
+  comparisonGraphBuilder(userDailyData.minutesActive, allUsersDayAverage.minutesActive, "comparison-minutes", "Minutes Active", 50)
+  comparisonGraphBuilder(userDailyData.flightsOfStairs, allUsersDayAverage.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
 function displayHotStreak() {
-  let activityConsecutiveDays = activity.consecutiveDays(user.userData.id)
-  hotStreakGraphBuilder(activityConsecutiveDays)
-
+  hotStreakGraphBuilder(activity.consecutiveDays(user.userData.id))
 }
 function displayStepGoal() {
   let stepData = activity.dayData(user.userData.id).numSteps;
   let stepGoal = user.userData.dailyStepGoal;
   let displayMessage;
   let titleText;
-  let legendStats;
+  let legendStatus;
   if (stepGoal > stepData) {
     stepGoal = stepGoal - stepData
     displayMessage = `${stepGoal} steps left to go!`
