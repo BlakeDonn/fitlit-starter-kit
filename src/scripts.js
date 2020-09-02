@@ -115,7 +115,20 @@ function displayDayComparison() {
   comparisonGraphBuilder(userDailyData.flightsOfStairs, allUsersDayAverage.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
 function displayHotStreak() {
-  hotStreakGraphBuilder(activity.consecutiveDays(user.userData.id))
+  let consecutiveDays = activity.consecutiveDays(user.userData.id,)
+  let data = []
+  consecutiveDays.forEach((day, i) => {
+    data.push({
+      type: "line",
+      indexLabelFontSize: 4,
+      dataPoints: [
+        {x: i, label: day[0].date.slice(-4), y: day[0].numSteps},
+        {x: i + 1, label: day[1].date.slice(-4), y: day[1].numSteps},
+        {x: i + 2, label: day[2].date.slice(-4), y: day[2].numSteps},
+      ]
+    })
+  })
+  hotStreakGraphBuilder(data)
 }
 function displayStepGoal() {
   let stepData = activity.dayData(user.userData.id).numSteps;
@@ -183,24 +196,12 @@ function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInter
   });
   chart.render();
 }
-function hotStreakGraphBuilder(activityConsecutiveDays) {
-  let data = []
-  activityConsecutiveDays.forEach((day, i) => {
-    data.push({
-      type: "line",
-      indexLabelFontSize: 4,
-      dataPoints: [
-        {x: i, label: day[0].date.slice(-4), y: day[0].numSteps},
-        {x: i + 1, label: day[1].date.slice(-4), y: day[1].numSteps},
-        {x: i + 2, label: day[2].date.slice(-4), y: day[2].numSteps},
-      ]
-    })
-  })
+function hotStreakGraphBuilder(data) {
   let chart = new CanvasJS.Chart("consecutive-days", {
     animationEnabled: true,
-    theme: "dark2",
+    theme: "dark1",
     title:{
-      text: "Your Hot Streaks (3+ day step increments)"
+      text: "Your Hot Streaks"
     },
     axisX:{
       interval: 1,
