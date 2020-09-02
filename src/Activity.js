@@ -39,18 +39,18 @@ class Activity {
   minutesActivePerDay(id, dateSelected) {
     return this.dayData(id, dateSelected).minutesActive;
   }
-  averageAverageProperty(id, property, dateSelected)  {
+  averageWeeklyProperty(id, property, dateSelected)  {
     let weeklyActivity = this.weeklyActivityProperties(id, dateSelected, property)
-    return Math.round((weeklyActivity.reduce((allMinutes, minute) => allMinutes + minute, 0) / 7) * 10) / 10;
+    return Math.round((weeklyActivity.reduce((combinedActivity, activity) => combinedActivity + activity, 0) / 7) * 10) / 10;
   }
-  stepGoalAchieved(id, dateSelected) {
+  assessStepGoal(id, dateSelected) {
     let userStepGoal = this.getUserID(id).dailyStepGoal;
     let dailySteps = this.dayData(id, dateSelected).numSteps;
     return dailySteps >= userStepGoal;
   }
-  daysStepGoalAchieved(id) {
+  calculateStreaks(id) {
     let usersActivityData = this.activitySet.filter(day => {
-      return day.userID === id && this.stepGoalAchieved(day.date, day.userID);
+      return day.userID === id && this.assessStepGoal(day.date, day.userID);
     })
     return usersActivityData.map(day => day.date);
   }
@@ -58,34 +58,37 @@ class Activity {
     let userActivityData =  this.activitySet.filter(day => day.userID === id)
     return userActivityData.sort((a, b) => b.flightsOfStairs - a.flightsOfStairs)[0].flightsOfStairs
   }
-  findDayActivity(dateSelected) {
+  allUserAverage(dateSelected) {
+    if (!dateSelected) {
+      dateSelected = this.date
+    }
     let allUsers = this.activitySet.filter(day => day.date === dateSelected);
-    let dayData = allUsers.reduce((allData, userDay)=>{
+    let allAverage = allUsers.reduce((allData, userDay)=> {
       allData.numSteps += userDay.numSteps
       allData.minutesActive += userDay.minutesActive
       allData.flightsOfStairs += userDay.flightsOfStairs
       return allData
     }, {numSteps: 0, minutesActive: 0, flightsOfStairs: 0})
-    Object.keys(dayData).forEach(key => dayData[key] = Math.round(dayData[key] / allUsers.length))
-    return dayData
+    Object.keys(allAverage).forEach(key => allAverage[key] = Math.round(allAverage[key] / allUsers.length))
+    return allAverage
   }
   weeklyStepGoal(id, property, dateSelected) {
-    let weeklyAverage = this.averageAverageProperty(id, property, dateSelected)
+    let weeklyAverage = this.averageWeeklyProperty(id, property, dateSelected)
     return weeklyAverage >= this.getUserID(id).dailyStepGoal
   }
   consecutiveDays(id) {
-      let perUser = this.activitySet.filter(user => user.userID === id);
-      let consecDays = [];
-      perUser.forEach((day, i) => {
-        if (i < 2 ) {
-          return
-        }
-        if (day.numSteps > perUser[i - 1].numSteps &&
-        perUser[i - 1].numSteps > perUser[i - 2].numSteps) {
-          consecDays.push({date: day.date, steps: day.numSteps})
+    let userActivityData = this.userActivityData(id);
+    let streakDays = [];
+    userActivityData.forEach((day, i) => {
+      if (i < 2 ) {
+        return
       }
-  })
-      return consecDays;
+      if (day.numSteps > userActivityData[i - 1].numSteps &&
+        userActivityData[i - 1].numSteps > userActivityData[i - 2].numSteps) {
+        streakDays.push(userActivityData.slice(i - 2, i + 1))
+      }
+    })
+    return streakDays;
   }
 }
 
