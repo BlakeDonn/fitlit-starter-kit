@@ -1,9 +1,21 @@
-.layout {
+body {
   background-color: #1D222E;
+
+}
+
+
+.layout {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  /* grid-template-columns: 1fr 2fr 1fr; */
   grid-template-columns: 25% 50% 25%;
   padding: 1rem;
+}
+
+.new-grid {
+  /* grid-template: 1fr 1fr; */
+  grid-template-columns: 50% 50%;
+  display: grid;
+  width: 100%;
 }
 
 .title {
@@ -23,6 +35,7 @@
 
 .user-name {
   border-bottom: 2px solid #EBECF0;
+  color: #9BBB58;
   font-size: 1.5em;
   font-weight: bold;
   margin: 10px;
