@@ -2,6 +2,7 @@
   background-color: #1D222E;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 25% 50% 25%;
   padding: 1rem;
 }
 
@@ -22,7 +23,8 @@
 
 .user-name {
   border-bottom: 2px solid #EBECF0;
-  font-size: x-large;
+  font-size: 1.5em;
+  font-weight: bold;
   margin: 10px;
   padding: 10px;
 }
@@ -51,6 +53,10 @@
   padding: 20px;
 }
 
+.stride-length-solo {
+  border-bottom: 2px solid #EBECF0;
+}
+
 .your-daily-step-goal {
   text-align: center;
 }
@@ -60,18 +66,26 @@
 }
 
 .compare-user-steps {
-  border: 1px solid black;
+  border: 10px solid #EBECF0;
+
+}
+
+.friend-names {
+  font-style: italic;
+}
+
+.user-friends {
+  border-bottom: 2px solid #EBECFO;
+  font-size: large;
 
 }
 
 .user-hydration-card{
-  border: 1px solid blue;
   position: relative;
   text-align: center;
   color: #1D222E;
   font-weight: 900;
   -webkit-text-stroke: 0.25px #EBECF0;
-  box-shadow: 0 8px 6px -6px black;
 }
 
 .weekly-hydration-card{
@@ -82,7 +96,7 @@
   text-align: -webkit-center;
 }
 .day-sleep-card{
-  border: 1px solid Brown;
+  border: 10px solid #EBECF0;
   position: relative;
   color: #EBECF0;
   background: url(../images/night-sky-2.jpg);
@@ -107,7 +121,7 @@
   border: 1px solid Green;
 }
 .comparison-activity-card{
-  border: 1px solid Green;
+  border: 10px solid #EBECF0;
   display: grid;
   grid-template-rows: .25fr 1.75fr 1.75fr 1.75fr;
 }
@@ -126,6 +140,10 @@
 .comparison-flights-card{
   border: 1px solid Green;
   background: #9CBB58;
+}
+
+.consecutive-days-card {
+  border: 10px solid #EBECF0;
 }
 .user-profile-display{
   background-color: #1D222E;
@@ -229,6 +247,7 @@
     }
 }
 .wave-wrapper {
+    border: 10px solid #EBECF0;
     overflow: hidden;
     position: absolute;
     left: 0;
