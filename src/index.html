@@ -59,15 +59,9 @@
     </section>
     <section class="user-hydration-card">
 
-<<<<<<< HEAD
       <div class="wave-wrapper wave-animation">
         <div class="wave-wrapper-inner bgTop">
           <div class="wave wave-top" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
-=======
-      <div class="wave-wrapper waveAnimation">
-        <div class="wave-wrapperInner bgTop">
-          <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
->>>>>>> b07d656074fdc490afe5410fa2ebc7e802287d27
         </div>
         <div class="wave-wrapper-inner bgMiddle">
           <div class="wave wave-middle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
@@ -79,7 +73,7 @@
       <!-- <canvas id="hydration-weekly-chart"></canvas> -->
     </section>
     <section class="day-sleep-card">
-      <p class="zzz-sleep">Z...z...Z...z...Z...z...Z...z...Z...z...Z...z...Z...z...Z...z...Z</p>
+      <p class="zzz-sleep">Z...z...Z...z...Z...z...Z...z</p>
     </section>
     <section class="day-activity-card">
       <h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
@@ -91,10 +85,18 @@
       <p class="day-activity today-distance-walked">Today's distance walked data
       </p>
       <div id="runner"></div>
-
     </section>
     <section class="new-grid">
     <section class = comparison-activity-card>
+      <h2 class="comparison-activity-header">You vs the World</h2>
+
+      <div class="carousel" data-flickity>
+          <div class="carousel-cell comparison-steps-card" id="comparison-steps" style="height: 300px; width: 100%;"></div>
+          <div class="carousel-cell comparison-minutes-card" id="comparison-minutes" style="height: 300px; width: 100%;"></div>
+          <div class="carousel-cell comparison-flights-card" id="comparison-flights" style="height: 300px; width: 100%;"></div>
+      </div>
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
     </section>
     <section class="consecutive-days-card" id="consecutive-days">
       <!-- <h2 class="consecutive-days">Days of Consecutive Activity for Steps</h2> -->

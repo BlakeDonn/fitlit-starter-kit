@@ -128,6 +128,7 @@
 .comparison-activity-header{
   border: 1px solid Green;
   background: #5081BC;
+  text-align: center;
 }
 .comparison-steps-card{
   border: 1px solid Green;
@@ -155,22 +156,11 @@
   position: inherit;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* carousel for your activity*/
 
 .carousel {
   background: #FAFAFA;
-  margin: 0 60px; /* space for prev/next buttons */
+  margin: 0 60px;
 }
 
 .carousel-cell {
@@ -180,11 +170,6 @@
   border-radius: 2px;
 }
 
-/* cell number */
-
-
-
-/* smaller, dark, rounded square */
 .flickity-prev-next-button {
   width: 30px;
   height: 30px;
@@ -211,11 +196,6 @@
   right: -80px;
   background-color: #4AACC5;
 }
-
-
-
-
-
 
 /* Activity data for the day */
 .activity-day-data-tile {
@@ -306,9 +286,7 @@
     animation: move_wave 15s linear infinite;
 }
 
-
-
-
+/* Sleep animation */
 .zzz-sleep{
   animation-duration: 20s;
   animation-fill-mode: none;
@@ -325,12 +303,14 @@
 
 @keyframes z-sleep {
   from{ transform: translateX(0)}
-  to{ transform: translateX(85%)}
+  to{ transform: translateX(70%)}
   0% {opacity: 0;}
   20% {opacity: .3;}
   70% {opacity: 0;}
   100% {opacity: 0;}
 }
+
+/* activity runner animation */
 
 #runner{
   margin-left: 3.5rem;

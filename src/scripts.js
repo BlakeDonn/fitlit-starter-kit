@@ -100,12 +100,6 @@ function displayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
   let activityFindAllUsers = activity.findDayActivity("2019/06/15")
   let activityUsers = activity.getDayData("2019/06/15", user.userData.id)
-  compareDayActivity .innerHTML +=
-  `<h2 class="comparison-activity-header">You vs the World</h2>
-  <p class="comparison-steps-card" id ="comparison-steps"></p>
-  <p class="comparison-minutes-card" id ="comparison-minutes"></p>
-  <p class="comparison-flights-card" id ="comparison-flights"></p>
-  `
   comparisonGraphBuilder(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
   comparisonGraphBuilder(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
   comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
