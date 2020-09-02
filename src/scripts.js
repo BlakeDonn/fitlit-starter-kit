@@ -119,7 +119,10 @@ function displayHotStreak() {
   let data = []
   consecutiveDays.forEach((day, i) => {
     data.push({
+      lineColor: "#5081BC",
+      color: "#F79647",
       type: "line",
+      lineThickness: 5,
       indexLabelFontSize: 4,
       dataPoints: [
         {x: i, label: day[0].date.slice(-4), y: day[0].numSteps},
