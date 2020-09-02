@@ -55,8 +55,7 @@ function displayDayConsumption() {
 }
 function displayWeeklyConsumption() {
   let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
-  console.log(userHydrationData)
-  graphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
+  weeklyDataGraphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
 }
 function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
@@ -186,7 +185,6 @@ function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInter
 }
 function hotStreakGraphBuilder(activityConsecutiveDays) {
   let dataPoints1 = []
-  console.log(activityConsecutiveDays.length)
   activityConsecutiveDays.forEach(day => {
     (dataPoints1.push({label: day.date.slice(-4), y: day.steps}))
   })
