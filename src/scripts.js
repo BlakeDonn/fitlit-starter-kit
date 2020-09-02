@@ -14,7 +14,7 @@ function onLoad() {
   displayDayComparison();
   displayHotStreak()
   displayStepGoal();
-  
+
 }
 function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
@@ -81,38 +81,29 @@ function displayWeeklySleep() {
 }
 function displayDayActivity() {
   let dayActivity = document.querySelector('.day-activity-card')
-  dayActivity.innerHTML +=
-  `<h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
-  <p class="day-activity today-step-data"> Daily Activity Data:
-    Today's step data
-    ${activity.dayData(user.userData.id).numSteps}
-    </p>
-    <p class="day-activity today-minutes-active">Today's mintues active data
-    ${activity.dayData(user.userData.id).minutesActive}</p>
-    <p class="day-activity today-distance-walked">Today's distance walked data
-    ${activity.dailyMilesWalked(user.userData.id)}
-  </p>
-  `
+  let stepData = document.querySelector('.today-step-data')
+  let minActive = document.querySelector('.today-minutes-active')
+  let walkedMiles = document.querySelector('.today-distance-walked')
+  stepData.innerHTML +=
+    `${activity.dayData( user.userData.id).numSteps}`
+  minActive.innerHTML +=
+    `${activity.dayData(user.userData.id).minutesActive}`
+  walkedMiles.innerHTML +=
+    `${activity.dailyMilesWalked(user.userData.id)}`
 }
 function displayWeeklyActivity() {
-  let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
-  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
+  let weeklyActivity = activity.weeklyActivityProperties(activity.activitySet[activity.activitySet.length - 1].date, user.userData.id)
+  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'stepCount')
   weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
 function displayDayComparison() {
   let compareDayActivity = document.querySelector('.comparison-activity-card')
-  let allUsersDayAverage = activity.allUserAverage()
-  let userDailyData = activity.dayData(user.userData.id)
-  compareDayActivity .innerHTML +=
-  `<h2 class="comparison-activity-header">You vs the World</h2>
-  <p class="comparison-steps-card" id ="comparison-steps"></p>
-  <p class="comparison-minutes-card" id ="comparison-minutes"></p>
-  <p class="comparison-flights-card" id ="comparison-flights"></p>
-  `
-  comparisonGraphBuilder(userDailyData.numSteps, allUsersDayAverage.numSteps, "comparison-steps", "Number of Steps", 2500)
-  comparisonGraphBuilder(userDailyData.minutesActive, allUsersDayAverage.minutesActive, "comparison-minutes", "Minutes Active", 50)
-  comparisonGraphBuilder(userDailyData.flightsOfStairs, allUsersDayAverage.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
+  let activityFindAllUsers = activity.allUserAverage()
+  let activityUsers = activity.dayData(user.userData.id)
+  comparisonGraphBuilder(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
+  comparisonGraphBuilder(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
+  comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
 function displayHotStreak() {
   let consecutiveDays = activity.consecutiveDays(user.userData.id,)
@@ -201,6 +192,7 @@ function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInter
 }
 function hotStreakGraphBuilder(data) {
   let chart = new CanvasJS.Chart("consecutive-days", {
+    backgroundColor: "#1D222E",
     animationEnabled: true,
     theme: "dark1",
     title:{
@@ -218,7 +210,7 @@ function hotStreakGraphBuilder(data) {
   chart.render();
 }
 function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
-  var chart = new CanvasJS.Chart("doughnutChart",{
+  let chart = new CanvasJS.Chart("doughnutChart",{
     backgroundColor: "#1D222E",
     title:{
       text: titleText,

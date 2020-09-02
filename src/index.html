@@ -59,35 +59,48 @@
     </section>
     <section class="user-hydration-card">
 
-      <div class="wave-wrapper waveAnimation">
-        <div class="wave-wrapperInner bgTop">
-          <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+      <div class="wave-wrapper wave-animation">
+        <div class="wave-wrapper-inner bgTop">
+          <div class="wave wave-top" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
         </div>
-        <div class="waveWrapperInner bgMiddle">
-          <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+        <div class="wave-wrapper-inner bgMiddle">
+          <div class="wave wave-middle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
         </div>
-        <div class="waveWrapperInner bgBottom">
-          <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+        <div class="wave-wrapper-inner bgBottom">
+          <div class="wave wave-bottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
         </div>
       </div>
       <!-- <canvas id="hydration-weekly-chart"></canvas> -->
     </section>
     <section class="day-sleep-card">
-      <p class="zzz-sleep">Z...z...Z...z...Z...z...Z...z...Z...z...Z...z...Z...z...Z...z...Z</p>
-    </section>
-    <section class="week-sleep-card">
-      <div id="sleepChartContainer" style="height: 300px; width: 100%;"></div>
-    </section>
-    <section class="all-time-sleep-card">
+      <p class="zzz-sleep">Z...z...Z...z...Z...z...Z...z</p>
     </section>
     <section class="day-activity-card">
+      <h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
+      <p class="day-activity today-step-data"> Daily Activity Data:
+        Today's step data
+      </p>
+      <p class="day-activity today-minutes-active">Today's mintues active data
+      </p>
+      <p class="day-activity today-distance-walked">Today's distance walked data
+      </p>
+      <div id="runner"></div>
     </section>
-    <section class="weekly-activity-card">
-    </section>
+    <section class="new-grid">
     <section class = comparison-activity-card>
+      <h2 class="comparison-activity-header">You vs the World</h2>
+
+      <div class="carousel" data-flickity>
+          <div class="carousel-cell comparison-steps-card" id="comparison-steps" style="height: 300px; width: 100%;"></div>
+          <div class="carousel-cell comparison-minutes-card" id="comparison-minutes" style="height: 300px; width: 100%;"></div>
+          <div class="carousel-cell comparison-flights-card" id="comparison-flights" style="height: 300px; width: 100%;"></div>
+      </div>
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
     </section>
     <section class="consecutive-days-card" id="consecutive-days">
       <!-- <h2 class="consecutive-days">Days of Consecutive Activity for Steps</h2> -->
+    </section>
     </section>
   </body>
 </html>

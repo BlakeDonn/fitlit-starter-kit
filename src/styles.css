@@ -2,7 +2,6 @@
   background-color: #1D222E;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-columns: 25% 50% 25%;
   padding: 1rem;
 }
 
@@ -66,7 +65,7 @@
 }
 
 .compare-user-steps {
-  border: 1px solid black;
+  border: 10px solid #EBECF0;
 
 }
 
@@ -81,13 +80,11 @@
 }
 
 .user-hydration-card{
-  /* border: 1px solid blue; */
   position: relative;
   text-align: center;
   color: #1D222E;
   font-weight: 900;
   -webkit-text-stroke: 0.25px #EBECF0;
-  box-shadow: 0 8px 6px -6px black;
 }
 
 .weekly-hydration-card{
@@ -101,7 +98,7 @@
   border: 10px solid #EBECF0;
   position: relative;
   color: #EBECF0;
-  background: #1D222E;
+  background: url(../images/night-sky-2.jpg);
   text-align: center;
 }
 .week-sleep-card{
@@ -111,21 +108,26 @@
   border: 1px solid Brown;
 }
 .day-activity-card{
+  background: url(../images/park-5.png);
   border: 10px solid #EBECF0;
   grid-column-start: 1;
   grid-row-start: 2;
+  background-repeat: round;
+  background-size: cover;
+  position: relative;
 }
 .weekly-activity-card{
   border: 1px solid Green;
 }
 .comparison-activity-card{
-  border: 1px solid Green;
+  border: 10px solid #EBECF0;
   display: grid;
-  grid-template-rows: .25fr 1.75fr 1.75fr 1.75fr;
+
 }
 .comparison-activity-header{
   border: 1px solid Green;
   background: #5081BC;
+  text-align: center;
 }
 .comparison-steps-card{
   border: 1px solid Green;
@@ -139,6 +141,10 @@
   border: 1px solid Green;
   background: #9CBB58;
 }
+
+.consecutive-days-card {
+  border: 10px solid #EBECF0;
+}
 .user-profile-display{
   background-color: #1D222E;
   color: #EBECF0;
@@ -149,22 +155,11 @@
   position: inherit;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* carousel for your activity*/
 
 .carousel {
   background: #FAFAFA;
-  margin: 0 60px; /* space for prev/next buttons */
+  margin: 0 60px;
 }
 
 .carousel-cell {
@@ -174,11 +169,6 @@
   border-radius: 2px;
 }
 
-/* cell number */
-
-
-
-/* smaller, dark, rounded square */
 .flickity-prev-next-button {
   width: 30px;
   height: 30px;
@@ -206,19 +196,15 @@
   background-color: #4AACC5;
 }
 
-
-
-
-
-
 /* Activity data for the day */
 .activity-day-data-tile {
   text-align: center;
-  color: #9BBB58
+  color: #1D222E;
 }
 
 .day-activity {
-  background-color: #1D222E;
+  background-color: #8064A1;
+  margin: 0.5rem;
   border-radius: .75rem;
   padding: 0.5rem;
   font-family: sans-serif;
@@ -249,7 +235,7 @@
     top: 0;
     margin: auto;
 }
-.waveWrapperInner {
+.wave-wrapper-inner {
     position: absolute;
     width: 100%;
     overflow: hidden;
@@ -277,31 +263,29 @@
     background-position: 0 bottom;
     transform-origin: center bottom;
 }
-.waveTop {
+.wave-top {
     background-size: 50% 100px;
 }
-.waveAnimation .waveTop {
+.wave-animation .wave-top {
   animation: move-wave 3s;
    -webkit-animation: move-wave 3s;
    -webkit-animation-delay: 1s;
    animation-delay: 1s;
 }
-.waveMiddle {
+.wave-middle {
     background-size: 50% 120px;
 }
-.waveAnimation .waveMiddle {
+.wave-animation .wave-middle {
     animation: move_wave 10s linear infinite;
 }
-.waveBottom {
+.wave-bottom {
     background-size: 50% 100px;
 }
-.waveAnimation .waveBottom {
+.wave-animation .wave-bottom {
     animation: move_wave 15s linear infinite;
 }
 
-
-
-
+/* Sleep animation */
 .zzz-sleep{
   animation-duration: 20s;
   animation-fill-mode: none;
@@ -313,13 +297,35 @@
   z-index: 2;
   color:#EBECF0;
   text-align: left;
+  font-weight: bold;
 }
 
 @keyframes z-sleep {
   from{ transform: translateX(0)}
-  to{ transform: translateX(85%)}
+  to{ transform: translateX(70%)}
   0% {opacity: 0;}
   20% {opacity: .3;}
   70% {opacity: 0;}
   100% {opacity: 0;}
+}
+
+/* activity runner animation */
+
+#runner{
+  margin-left: 3.5rem;
+  background:url("../images/small-walk.png");
+  width: 93px;
+  height: 115px;
+  animation: walk 1.5s steps(8) infinite;
+
+}
+@keyframes walk{
+  from
+  {
+    background-position: 0;
+  }
+  to
+  {
+    background-position: -751px;
+  }
 }
