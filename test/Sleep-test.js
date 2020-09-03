@@ -135,7 +135,7 @@ describe("Sleep", () => {
 
   it.skip("should return daily sleep quality over 7 day period", () => {
     sleep.userSleep = sampleSleepData;
-    expect(sleep.weeklySleepProperties(2, "2019/06/21", ).map(daySleep => daySleep.sleepQuality)).to.deep.equal(filterUser2.map(day => day.sleepQuality))
+    expect(sleep.weeklySleepProperties(2, "2019/06/21").map(daySleep => daySleep.sleepQuality)).to.deep.equal(filterUser2.map(day => day.sleepQuality))
   })
 
   it.skip("should return average sleep quality for all users", () => {

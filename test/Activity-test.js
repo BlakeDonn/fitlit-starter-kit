@@ -172,7 +172,7 @@ describe("Activity", () => {
   });
 
   it.skip("should return if a user achieved step goal for the week ", () => {
-    expect(activity.weeklyStepGoal(1, 'numSteps', "2019/06/15", )).to.be.equal(false);
+    expect(activity.weeklyStepGoal(1, 'numSteps', "2019/06/15")).to.be.equal(false);
   });
 
   it.skip("should calculate 3+ days of consecutive step increases", () => {

@@ -3,7 +3,7 @@ const expect = chai.expect;
 const Hydration = require("../src/Hydration")
 
 describe("Hydration", () => {
-  let sampleHydrationData, hydration, filterUser1, filterUser2, weeklyData;
+  let sampleHydrationData, hydration, filterUser1, filterUser2;
   beforeEach(() => {
     sampleHydrationData = [ {
       "userID": 1,

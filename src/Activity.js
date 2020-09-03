@@ -45,7 +45,7 @@ class Activity {
   }
   daysOverStepGoal(id) {
     let usersActivityData = this.activitySet.filter(day => {
-      return day.userID === id && this.assessStepGoal(day.userID, day.date, );
+      return day.userID === id && this.assessStepGoal(day.userID, day.date);
     })
     return usersActivityData.map(day => day.date);
   }
