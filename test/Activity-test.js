@@ -1,9 +1,8 @@
 const chai = require("chai");
 const expect = chai.expect;
-const Activity = require("../src/Activity")
-
+const Activity = require("../src/Activity");
 describe("Activity", () => {
-  let activity, sampleActivtyData;
+  let activity, sampleActivtyData
   beforeEach(() => {
     sampleActivtyData =
     [
@@ -105,7 +104,7 @@ describe("Activity", () => {
         "minutesActive": 174,
         "flightsOfStairs": 26
       },
-    ]
+    ]  
     activity = new Activity(sampleActivtyData);
   });
 
@@ -117,50 +116,50 @@ describe("Activity", () => {
     expect(activity).to.be.an.instanceof(Activity);
   });
 
-  it("should return the miles a user has walked", () => {
-    expect(activity.walkedMilesPerDay("2019/06/15", 1)).to.be.equal(2.9);
+  it("should return minutes active for specific day", () => {
+    expect(activity.minutesActivePerDay(1, "2019/06/15")).to.be.equal(140);
   });
 
-  it("should return minutes active for specific day", () => {
-    expect(activity.minutesActivePerDay("2019/06/16", 1)).to.be.equal(175);
+  it("should return average minutes active for the most recent week", () => {
+    expect(activity.averageWeeklyProperty( 1, 'minutesActive')).to.be.equal(171.1);
   });
 
   it("should return average minutes active for a specific week", () => {
-    expect(activity.averageWeeklyMinutes("2019/06/15", 1, 'minutesActive')).to.be.equal(171.1);
+    expect(activity.averageWeeklyProperty( 1, 'minutesActive', "2019/06/21")).to.be.equal(171.1);
   });
 
-  it("should check if user reached step goal for specific day", () => {
-    expect(activity.stepGoalAchieved("2019/06/15", 1)).to.be.equal(false);
-  });
+  // it.only("should check if user reached step goal for specific day", () => {
+  //   console.log(userRepository)
+  //   expect(activity.assessStepGoal("2019/06/15", 1,)).to.be.equal(false);
+  // });
 
-  it("should check if user reached step goal for specific day", () => {
-    expect(activity.stepGoalAchieved("2019/06/20", 1)).to.be.equal(true);
-  });
+  // it("should check if user reached step goal for specific day", () => {
+  //   expect(activity.assessStepGoal("2019/06/20", 1)).to.be.equal(true);
+  // });
 
-  it("should find all days where they reach step goal ", () => {
-    expect(activity.daysStepGoalAchieved(1)).to.be.deep.equal(["2019/06/17", "2019/06/20"]);
-  });
+  // it("should find all days where they reach step goal ", () => {
+  //   expect(activity.daysStepGoalAchieved(1)).to.be.deep.equal(["2019/06/17", "2019/06/20"]);
+  // });
 
   it("should find a users all-time stair climbing record ", () => {
     expect(activity.findStairRecord(1)).to.be.equal(36);
   });
 
-  it("should find users average stairs climbed, steps taken, minutes active, for specific date", () => {
-    expect(activity.findDayActivity("2019/06/17", 1)).to.be.deep.equal({
+  it("should find all users average stairs climbed, steps taken, minutes active, for specific date", () => {
+    expect(activity.allUserAverage("2019/06/17")).to.be.deep.equal({
       "numSteps": 14040,
       "minutesActive": 117,
       "flightsOfStairs": 11
     });
   });
 
-  it("should return if a user achieved step goal for the week ", () => {
-    expect(activity.weeklyStepGoal("2019/06/15", 1, 'numSteps')).to.be.equal(false);
-  });
+  // it("should return if a user achieved step goal for the week ", () => {
+  //   expect(activity.weeklyStepGoal("2019/06/15", 1, 'numSteps')).to.be.equal(false);
+  // });
 
-  it("should return if a user achieved step goal for the week ", () => {
-    expect(activity.consecutiveDays(1)).to.deep.equal(["2019/06/17"]);
-  });
+  // it("should return if a user achieved step goal for the week ", () => {
+  //   expect(activity.consecutiveDays(1)).to.deep.equal(["2019/06/17"]);
+  // });
 
 });
 
-//stop
