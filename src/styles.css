@@ -102,6 +102,7 @@
   position: relative;
   text-align: -webkit-center;
 }
+
 .day-sleep-card{
   border: 10px solid #EBECF0;
   position: relative;
@@ -109,12 +110,19 @@
   background: url(../images/night-sky-2.jpg);
   text-align: center;
 }
+
 .week-sleep-card{
   border: 1px solid Brown;
 }
+
 .all-time-sleep-card{
   border: 1px solid Brown;
 }
+
+.sleep-data{
+  font-size: 1.5rem;
+}
+
 .day-activity-card{
   background: url(../images/park-5.png);
   border: 10px solid #EBECF0;
