@@ -79,11 +79,15 @@
 
 }
 
+.hydration-for-day-number{
+  font-size: 3rem;
+}
+
 .user-hydration-card{
   position: relative;
   text-align: center;
   color: #1D222E;
-  font-weight: 900;
+  font-size: 2rem;
   -webkit-text-stroke: 0.25px #EBECF0;
 }
 

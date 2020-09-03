@@ -50,8 +50,8 @@ function displayDayConsumption() {
   let waterConsumption = document.querySelector('.user-hydration-card')
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
-    <p> Today's water consumption:
-    ${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
+    <p> Today's water consumption:</p>
+    <p class="hydration-for-day-number">${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
   let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
