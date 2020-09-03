@@ -103,6 +103,7 @@ function displayDayActivity() {
 
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
+  console.log(weeklyActivity)
   weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps')
   weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
@@ -158,6 +159,7 @@ function displayStepGoal() {
 
 function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
+  console.log(dataPoint)
   let hydrationChart = new CanvasJS.Chart(chartName, {
     backgroundColor: "#1D222E",
     title: {
@@ -168,7 +170,8 @@ function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
       labelFontColor: "#EBECF0"
     },
     axisY: {
-      labelFontColor: "#EBECF0"
+      labelFontColor: "#EBECF0",
+      minimum: 0
     },
     data: [
       {
