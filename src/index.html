@@ -1,65 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
-
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssnormalize/cssnormalize-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.18.1/build/cssnormalize/cssnormalize-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <link rel="stylesheet" href="./styles.css">
     <title>Activity Tracker</title>
-    <script type="text/javascript" src="../node_modules/chart.js/dist/Chart.js"></script>
-    <script type="text/javascript" src="../node_modules/moment/moment.js"></script>
-
-    <script type="text/javascript" src="../data/users.js"></script>
-    <script type="text/javascript" src="../data/hydration.js"></script>
-    <script type="text/javascript" src="../data/sleep.js"></script>
-    <script type="text/javascript" src="../data/activity.js"></script>
-    <script type="text/javascript" src="./User.js"></script>
-    <script type="text/javascript" src="./UserRepository.js"></script>
-    <script type="text/javascript" src="./Hydration.js"></script>
-    <script type="text/javascript" src="./Sleep.js"></script>
-    <script type="text/javascript" src="./Activity.js"></script>
-    <script type="text/javascript" src="./scripts.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script> -->
-
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script type="text/javascript">
-
-    </script>
-
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-
-
   </head>
-  <body>
-
-  <div class="layout"
-  <h1 class="title">Activity Tracker</h1>
-  <h2 class="user-profile-display">Welcome!</h2>
+  <body class="layout">
+    <h1 class="title">Activity Tracker</h1>
+    <h2 class="user-profile-display">Welcome!</h2>
     <section class="weekly-hydration-card">
       <div class="carousel" data-flickity>
-          <div class="carousel-cell"id="hydrationChart" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell"id="sleepQualityChart" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell"id="sleepAmountChart" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell"id="stepCountWeeklyChart" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell"id="flightsClimbedChart" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell"id="minutesActiveChart" style="height: 300px; width: 100%;"></div>
+        <div class="carousel-cell" id="hydrationChart"></div>
+        <div class="carousel-cell" id="sleepQualityChart"></div>
+        <div class="carousel-cell" id="sleepAmountChart"></div>
+        <div class="carousel-cell" id="stepCountWeeklyChart"></div>
+        <div class="carousel-cell" id="flightsClimbedChart"></div>
+        <div class="carousel-cell" id="minutesActiveChart"></div>
       </div>
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+      <h2 class="comparison-activity-header">You vs the World</h2>
+      <div class="carousel" data-flickity>
+        <div class="carousel-cell comparison-steps-card" id="comparison-steps"></div>
+        <div class="carousel-cell comparison-minutes-card" id="comparison-minutes"></div>
+        <div class="carousel-cell comparison-flights-card" id="comparison-flights"></div>
+      </div>
     </section>
-    <section class="user-info-card">
-    </section>
+    <section class="user-info-card"></section>
     <section class="compare-user-steps">
-      <div id="doughnutChart" style="height: 300px; width: 100%;"></div>
-
+      <div id="doughnutChart"></div>
     </section>
     <section class="user-hydration-card">
-
       <div class="wave-wrapper wave-animation">
         <div class="wave-wrapper-inner bgTop">
           <div class="wave wave-top" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
@@ -71,38 +44,38 @@
           <div class="wave wave-bottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
         </div>
       </div>
-      <!-- <canvas id="hydration-weekly-chart"></canvas> -->
     </section>
     <section class="day-sleep-card">
       <p class="zzz-sleep">Z...z...Z...z...Z...z...Z...z</p>
     </section>
     <section class="day-activity-card">
       <h2 class="activity-day-data-tile"=>Activity Data For The Day</h2>
-      <p class="day-activity today-step-data"> Daily Activity Data:
+      <p class="day-activity today-step-data">
+        Daily Activity Data:
         Today's step data
       </p>
-      <p class="day-activity today-minutes-active">Today's mintues active data
+      <p class="day-activity today-minutes-active">
+        Today's minutes active data
       </p>
-      <p class="day-activity today-distance-walked">Today's distance walked data
+      <p class="day-activity today-distance-walked">
+        Today's distance walked data
       </p>
       <div id="runner"></div>
     </section>
-  </div>
-    <section class="new-grid">
-    <section class = comparison-activity-card>
-      <h2 class="comparison-activity-header">You vs the World</h2>
-
-      <div class="carousel" data-flickity>
-          <div class="carousel-cell comparison-steps-card" id="comparison-steps" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell comparison-minutes-card" id="comparison-minutes" style="height: 300px; width: 100%;"></div>
-          <div class="carousel-cell comparison-flights-card" id="comparison-flights" style="height: 300px; width: 100%;"></div>
-      </div>
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-
-    </section>
-    <section class="consecutive-days-card" id="consecutive-days">
-      <!-- <h2 class="consecutive-days">Days of Consecutive Activity for Steps</h2> -->
-    </section>
-    </section>
+    <section class="consecutive-days-card" id="consecutive-days"></section>
+    <script type="text/javascript" src="../node_modules/chart.js/dist/Chart.js"></script>
+    <script type="text/javascript" src="../node_modules/moment/moment.js"></script>
+    <script type="text/javascript" src="../data/users.js"></script>
+    <script type="text/javascript" src="../data/hydration.js"></script>
+    <script type="text/javascript" src="../data/sleep.js"></script>
+    <script type="text/javascript" src="../data/activity.js"></script>
+    <script type="text/javascript" src="./User.js"></script>
+    <script type="text/javascript" src="./UserRepository.js"></script>
+    <script type="text/javascript" src="./HydrationRepository.js"></script>
+    <script type="text/javascript" src="./Sleep.js"></script>
+    <script type="text/javascript" src="./Activity.js"></script>
+    <script type="text/javascript" src="./scripts.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   </body>
 </html>

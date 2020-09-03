@@ -31,8 +31,7 @@ body {
 
 .user-name {
   border-bottom: 2px solid #EBECF0;
-  color: #9BBB58;
-  font-size: 1.5em;
+  font-size: 3rem;
   font-weight: bold;
   margin: 10px;
   padding: 10px;
@@ -40,12 +39,14 @@ body {
 
 .user-address {
   border-bottom: 2px solid #EBECF0;
+  font-size: 1.5rem;
   margin: 10px;
   padding: 20px;
 }
 
 .user-email {
   border-bottom: 2px solid #EBECF0;
+  font-size: 1.5rem;
   margin: 10px;
   padding: 20px;
 }
@@ -54,6 +55,7 @@ body {
   border-bottom: 2px solid #EBECF0;
   margin: 10px;
   padding: 20px;
+  font-size: 1.5rem;
 }
 
 .all-users-step-goal {
@@ -80,18 +82,23 @@ body {
 
 .friend-names {
   font-style: italic;
+  font-size: 1.5rem;
 }
 
 .user-friends {
   border-bottom: 2px solid #EBECFO;
-  font-size: large;
+  font-size: 2rem;
+}
+
+.hydration-for-day-number{
+  font-size: 3rem;
 }
 
 .user-hydration-card{
   color: #1D222E;
-  font-weight: 900;
   position: relative;
   text-align: center;
+  font-size: 2rem;
   -webkit-text-stroke: 0.25px #EBECF0;
 }
 
@@ -119,6 +126,13 @@ body {
   border: 1px solid Brown;
 }
 
+
+
+.sleep-data{
+  font-size: 1.5rem;
+}
+
+
 .day-activity-card{
   background: url(../images/park-5.png);
   background-repeat: round;
@@ -127,10 +141,10 @@ body {
   grid-column-start: 1;
   grid-row-start: 2;
   position: relative;
+  font-size: 1.5rem;
 }
 
 .weekly-activity-card{
-  border: 1px solid Green;
 }
 
 .comparison-activity-card{
@@ -139,8 +153,7 @@ body {
 }
 
 .comparison-activity-header{
-  border: 1px solid Green;
-  background: #5081BC;
+  background: #23BFAA;
   text-align: center;
 }
 
@@ -161,6 +174,8 @@ body {
 
 .consecutive-days-card {
   border: 10px solid #EBECF0;
+  height: 20rem;
+  grid-column: 1 / span 3;
 }
 
 .user-profile-display{
@@ -172,6 +187,13 @@ body {
 
 .canvasjs-chart-canvas{
   position: inherit;
+  width: 100%;
+  height: 20rem;
+}
+
+#doughnutChart{
+  height: 300px;
+  width: 100%
 }
 
 /* carousel for your activity*/
@@ -179,12 +201,13 @@ body {
 .carousel {
   background: #FAFAFA;
   margin: 0 60px;
+  margin-bottom: 3rem;
 }
 
 .carousel-cell {
-  border-radius: 2px;
-  height: 100%;
   margin-right: 10px;
+  border-radius: 2px;
+  height: 300px;
   width: 100%;
 }
 
@@ -219,6 +242,10 @@ body {
 .flickity-prev-next-button.next {
   background-color: #4AACC5;
   right: -80px;
+}
+
+.flickity-page-dots{
+  background: #23BFAA;
 }
 
 /* Activity data for the day */

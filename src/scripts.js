@@ -50,8 +50,8 @@ function displayDayConsumption() {
   let waterConsumption = document.querySelector('.user-hydration-card')
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
-    <p> Today's water consumption:
-    ${hydration.dayOunces(user.userData.id).numOunces}oz</p>`
+    <p> Today's water consumption:</p>
+    <p class="hydration-for-day-number">${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
   let userHydrationData = hydration.weeklyHydrationProperties(user.userData.id)
@@ -60,12 +60,12 @@ function displayWeeklyConsumption() {
 function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
   sleepProperties.innerHTML +=
-  `<h2>Sleep Data For The Day</h2>
-  <p> Today's sleep data:
+  `<h2 class="sleep-data">Sleep Data For The Day</h2>
+  <p class="sleep-data"> Today's sleep data:
   Hours Slept ${sleep.daySleep( user.userData.id).hoursSlept}
   Sleep Quality ${sleep.daySleep(user.userData.id).sleepQuality}
-  <h2>Sleep Data For All Time</h2>
-  <p> All time sleep data:
+  <h2 class="sleep-data">Sleep Data For All Time</h2>
+  <p class="sleep-data"> All time sleep data:
     All time Average Hours Slept
     ${sleep.averageAllTimeSleep(user.userData.id, "hoursSlept")}
     All time Average Sleep Quality
@@ -165,6 +165,7 @@ function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   });
   hydrationChart.render();
 }
+
 function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInterval ) {
   let chart = new CanvasJS.Chart(id, {
     animationEnabled: true,
