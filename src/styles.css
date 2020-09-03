@@ -1,8 +1,6 @@
 body {
   background-color: #1D222E;
-
 }
-
 
 .layout {
   display: grid;
@@ -11,7 +9,6 @@ body {
 }
 
 .new-grid {
-  /* grid-template: 1fr 1fr; */
   grid-template-columns: 50% 50%;
   display: grid;
   width: 100%;
@@ -79,7 +76,6 @@ body {
 
 .compare-user-steps {
   border: 10px solid #EBECF0;
-
 }
 
 .friend-names {
@@ -89,81 +85,91 @@ body {
 .user-friends {
   border-bottom: 2px solid #EBECFO;
   font-size: large;
-
 }
 
 .user-hydration-card{
-  position: relative;
-  text-align: center;
   color: #1D222E;
   font-weight: 900;
+  position: relative;
+  text-align: center;
   -webkit-text-stroke: 0.25px #EBECF0;
 }
 
 .weekly-hydration-card{
+  align-content: center;
   border: 10px solid #EBECF0;
   grid-column-start: 2;
-  align-content: center;
   position: relative;
   text-align: -webkit-center;
 }
+
 .day-sleep-card{
-  border: 10px solid #EBECF0;
-  position: relative;
-  color: #EBECF0;
   background: url(../images/night-sky-2.jpg);
+  border: 10px solid #EBECF0;
+  color: #EBECF0;
+  position: relative;
   text-align: center;
 }
+
 .week-sleep-card{
   border: 1px solid Brown;
 }
+
 .all-time-sleep-card{
   border: 1px solid Brown;
 }
+
 .day-activity-card{
   background: url(../images/park-5.png);
+  background-repeat: round;
+  background-size: cover;
   border: 10px solid #EBECF0;
   grid-column-start: 1;
   grid-row-start: 2;
-  background-repeat: round;
-  background-size: cover;
   position: relative;
 }
+
 .weekly-activity-card{
   border: 1px solid Green;
 }
+
 .comparison-activity-card{
   border: 10px solid #EBECF0;
   display: grid;
-
 }
+
 .comparison-activity-header{
   border: 1px solid Green;
   background: #5081BC;
   text-align: center;
 }
+
 .comparison-steps-card{
-  border: 1px solid Green;
   background: #8064A1;
+  border: 1px solid Green;
 }
+
 .comparison-minutes-card{
-  border: 1px solid Green;
   background: #F79647
-}
-.comparison-flights-card{
   border: 1px solid Green;
+}
+
+.comparison-flights-card{
   background: #9CBB58;
+  border: 1px solid Green;
 }
 
 .consecutive-days-card {
   border: 10px solid #EBECF0;
 }
+
 .user-profile-display{
   background-color: #1D222E;
   color: #EBECF0;
   display: grid;
   justify-self: center;
 }
+
 .canvasjs-chart-canvas{
   position: inherit;
 }
@@ -176,126 +182,144 @@ body {
 }
 
 .carousel-cell {
-  width: 100%;
+  border-radius: 2px;
   height: 100%;
   margin-right: 10px;
-  border-radius: 2px;
+  width: 100%;
 }
 
 .flickity-prev-next-button {
-  width: 30px;
-  height: 30px;
-  border-radius: 2px;
   background: #333;
-
+  border-radius: 2px;
+  height: 30px;
+  width: 30px;
 }
+
 .flickity-prev-next-button:hover {
   background: #F90;
 }
+
 /* arrow color */
+
 .flickity-prev-next-button .arrow {
   fill: white;
 }
+
 .flickity-prev-next-button.no-svg {
   color: white;
 }
+
 /* position outside */
+
 .flickity-prev-next-button.previous {
+  background-color: #4AACC5;
   left: -50px;
-  background-color: #4AACC5;
 }
+
 .flickity-prev-next-button.next {
-  right: -80px;
   background-color: #4AACC5;
+  right: -80px;
 }
 
 /* Activity data for the day */
 .activity-day-data-tile {
-  text-align: center;
   color: #1D222E;
+  text-align: center;
 }
 
 .day-activity {
   background-color: #8064A1;
-  margin: 0.5rem;
   border-radius: .75rem;
-  padding: 0.5rem;
+  color: #EBECF0
   font-family: sans-serif;
   font-weight: 500;
-  color: #EBECF0
+  margin: 0.5rem;
+  padding: 0.5rem;
 }
-
 
 /* Hydration wave */
+
 @keyframes move_wave {
-    0% {
-        transform: translateX(0) translateZ(0) scaleY(1)
-    }
-    50% {
-        transform: translateX(-25%) translateZ(0) scaleY(0.55)
-    }
-    100% {
-        transform: translateX(-50%) translateZ(0) scaleY(1)
-    }
+  0% {
+      transform: translateX(0) translateZ(0) scaleY(1)
+  }
+  50% {
+      transform: translateX(-25%) translateZ(0) scaleY(0.55)
+  }
+  100% {
+      transform: translateX(-50%) translateZ(0) scaleY(1)
+  }
 }
+
 .wave-wrapper {
-    border: 10px solid #EBECF0;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: auto;
+  border: 10px solid #EBECF0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
+
 .wave-wrapper-inner {
-    position: absolute;
-    width: 100%;
-    overflow: hidden;
-    height: 100%;
-    bottom: -1px;
-    background-image: linear-gradient(to top, #cbf7f1 20%, #7ca6d9 80%);
+  background-image: linear-gradient(to top, #cbf7f1 20%, #7ca6d9 80%);
+  bottom: -1px;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
 }
+
 .bgTop {
-    z-index: -5;
-    opacity: 0.5;
+  opacity: 0.5;
+  z-index: -5;
 }
+
 .bgMiddle {
-    z-index: -10;
-    opacity: 0.75;
+  opacity: 0.75;
+  z-index: -10;
 }
+
 .bgBottom {
-    z-index: -15;
+  z-index: -15;
 }
+
 .wave {
-    position: absolute;
-    left: 0;
-    width: 200%;
-    height: 100%;
-    background-repeat: repeat no-repeat;
-    background-position: 0 bottom;
-    transform-origin: center bottom;
+  background-position: 0 bottom;
+  background-repeat: repeat no-repeat;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  transform-origin: center bottom;
+  width: 200%;
 }
+
 .wave-top {
-    background-size: 50% 100px;
+  background-size: 50% 100px;
 }
+
 .wave-animation .wave-top {
   animation: move-wave 3s;
    -webkit-animation: move-wave 3s;
    -webkit-animation-delay: 1s;
    animation-delay: 1s;
 }
+
 .wave-middle {
-    background-size: 50% 120px;
+  background-size: 50% 120px;
 }
+
 .wave-animation .wave-middle {
-    animation: move_wave 10s linear infinite;
+  animation: move_wave 10s linear infinite;
 }
+
 .wave-bottom {
-    background-size: 50% 100px;
+  background-size: 50% 100px;
 }
+
 .wave-animation .wave-bottom {
-    animation: move_wave 15s linear infinite;
+  animation: move_wave 15s linear infinite;
 }
 
 /* Sleep animation */
@@ -306,11 +330,11 @@ body {
   animation-name: z-sleep;
   animation-delay: 0;
   animation-timing-function: linear;
-  filter: drop-shadow(0 0 0.75rem black);
-  z-index: 2;
   color:#EBECF0;
-  text-align: left;
+  filter: drop-shadow(0 0 0.75rem black);
   font-weight: bold;
+  text-align: left;
+  z-index: 2;
 }
 
 @keyframes z-sleep {
