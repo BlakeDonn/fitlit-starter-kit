@@ -1,8 +1,3 @@
-// const UserRepository = require("./UserRepository")
-// const userData = require("../data/users")
-// const userRepository = new UserRepository([userData[0],userData[1]]);
-// const activityData = require("../data/activity")
-
 class Activity {
   constructor(activitySet) {
     this.activitySet = activitySet;
@@ -40,7 +35,7 @@ class Activity {
     return this.dayData(id, dateSelected).minutesActive;
   }
   averageWeeklyProperty(id, property, dateSelected)  {
-    let weeklyActivity = this.weeklyActivityProperties(id, dateSelected, property)
+    let weeklyActivity = this.weeklyActivityProperties(id, dateSelected).map(day => day[property])
     return Math.round((weeklyActivity.reduce((combinedActivity, activity) => combinedActivity + activity, 0) / 7) * 10) / 10;
   }
   assessStepGoal(id, dateSelected) {
@@ -48,9 +43,9 @@ class Activity {
     let dailySteps = this.dayData(id, dateSelected).numSteps;
     return dailySteps >= userStepGoal;
   }
-  calculateStreaks(id) {
+  daysOverStepGoal(id) {
     let usersActivityData = this.activitySet.filter(day => {
-      return day.userID === id && this.assessStepGoal(day.date, day.userID);
+      return day.userID === id && this.assessStepGoal(day.userID, day.date, );
     })
     return usersActivityData.map(day => day.date);
   }

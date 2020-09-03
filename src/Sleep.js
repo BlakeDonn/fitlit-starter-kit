@@ -7,7 +7,7 @@ class Sleep {
     return this.sleepSet.filter(dailySleep => dailySleep.userID === id);
   }
   daySleep(id, startingDate ) {
-    if (!startingDate) {
+    if(!startingDate) {
       startingDate = this.date;
     }
     return this.sleepSet.find(day => day.date === startingDate && day.userID === id);
@@ -40,7 +40,7 @@ class Sleep {
     let qualityAboveThree = [];
     let uniqueIds = Array.from(new Set(this.sleepSet.map(user => user.userID)))
     uniqueIds.forEach(id => {
-      let usersSleepQuality = this.weeklySleepProperties(date, id).map(daySleep => daySleep.sleepQuality);
+      let usersSleepQuality = this.weeklySleepProperties(id, startingDate).map(daySleep => daySleep.sleepQuality);
       let totalQuality = usersSleepQuality.reduce((quality, currentQuality ) =>{
         return quality += currentQuality
       });
@@ -62,7 +62,7 @@ class Sleep {
     if (!startingDate) {
       startingDate = this.date
     }
-    let sleepDataPerDay = this.sleepSet.filter(user => user.date === targetDate);
+    let sleepDataPerDay = this.sleepSet.filter(user => user.date === startingDate);
     let topSleeper = sleepDataPerDay.sort((a, b) => a.hoursSlept - b.hoursSlept);
     return topSleeper[0].userID;
   }
