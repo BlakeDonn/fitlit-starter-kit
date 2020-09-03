@@ -6,27 +6,12 @@
 
 **Project Description**
 
-<<<<<<< Updated upstream
-A site for fitness and health tracking where users can view information important to their health.  A user can view personal data regarding their water intake, activity levels and sleep information.
-=======
-* A site for fitness and health tracking where users can view information important to their health.  A user can view personal data regarding their water intake, activity levels and sleep information.
->>>>>>> Stashed changes
+*A site for fitness and health tracking where users can view information important to their health.  A user can view personal data regarding their water intake, activity levels and sleep information.
 
 **Installation**
 
 **Fork this repository:**
 
-<<<<<<< Updated upstream
-https://github.com/BlakeDonn/fitlit-starter-kit
-
-**Clone your forked repository**
-
-`git clone` and the copied URL
-
-**Change into the directory and install the project dependencies**
-
-`cd` into directory and run `npm install` for dependencies
-=======
 * https://github.com/BlakeDonn/fitlit-starter-kit
 
 **Clone your forked repository**
@@ -36,7 +21,6 @@ https://github.com/BlakeDonn/fitlit-starter-kit
 **Change into the directory and install the project dependencies**
 
 * `cd` into directory and run `npm install` for dependencies
->>>>>>> Stashed changes
 
 **Project Goals**
 
@@ -62,15 +46,6 @@ https://github.com/BlakeDonn/fitlit-starter-kit
 
 **Programming Languages Used**
 
-<<<<<<< Updated upstream
-HTML
-CSS
-JavaScript
-
-**Other Important Features Implemented**
-
-Creating graphs to display data in an organized user friendly way.
-=======
 * HTML
 * CSS
 * JavaScript
@@ -78,7 +53,6 @@ Creating graphs to display data in an organized user friendly way.
 **Other Important Features Implemented**
 
 * Creating graphs to display data in an organized user friendly way.
->>>>>>> Stashed changes
 
 ## Comps Given
 
@@ -86,18 +60,10 @@ Creating graphs to display data in an organized user friendly way.
 
 ## In Action
 
-**Randomize and Save Covers**
+**Fitness Dashboard**
 
-![Randomize and Save Covers](https://media.giphy.com/media/mFeIf7Rdc2jGYTQwrh/giphy.gif)
-
-**Create Your Own Cover**
-
-![Create Your Own Cover](https://media.giphy.com/media/LoD7JgRIgtmG0dT1yI/giphy.gif)
-<<<<<<< Updated upstream
-=======
+![project page load](https://i.imgur.com/oIX4rKd.gif)
 
  **Issues to be Resolved**
 
- * When executing the final 5 functions of the Activity-test.js test suite, be sure to follow the instructions presented.
- These instructions aim to emulate script-linking as it would exist in a real-world scenario.
->>>>>>> Stashed changes
+ * When executing the final 5 functions of the Activity-test.js test suite, be sure to follow the instructions presented.These instructions aim to emulate script-linking as it would exist in a real-world scenario.
