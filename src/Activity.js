@@ -43,9 +43,9 @@ class Activity {
     let dailySteps = this.dayData(id, dateSelected).numSteps;
     return dailySteps >= userStepGoal;
   }
-  calculateStreaks(id) {
+  daysOverStepGoal(id) {
     let usersActivityData = this.activitySet.filter(day => {
-      return day.userID === id && this.assessStepGoal(day.date, day.userID);
+      return day.userID === id && this.assessStepGoal(day.userID, day.date, );
     })
     return usersActivityData.map(day => day.date);
   }
