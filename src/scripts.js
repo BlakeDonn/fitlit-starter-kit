@@ -51,7 +51,7 @@ function displayDayConsumption() {
   waterConsumption.innerHTML +=
     `<h2>Hydration Data For The Day</h2>
     <p> Today's water consumption:</p>
-    <p class="hydration-for-day-number">${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
+    <p class="hydration-for-day-number">${hydration.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
   let userHydrationData = hydration.weeklyHydrationProperties(user.userData.id)
@@ -105,9 +105,9 @@ function displayDayComparison() {
 }
 function displayHotStreak() {
   let consecutiveDays = activity.consecutiveDays(user.userData.id)
-  let data = []
+  let displayData = []
   consecutiveDays.forEach((day, i) => {
-    data.push({
+    displayData.push({
       lineColor: "#5081BC",
       color: "#F79647",
       type: "line",
@@ -120,8 +120,9 @@ function displayHotStreak() {
       ]
     })
   })
-  hotStreakGraphBuilder(data)
+  hotStreakGraphBuilder(displayData)
 }
+
 function displayStepGoal() {
   let stepData = activity.dayData(user.userData.id).numSteps;
   let stepGoal = user.userData.dailyStepGoal;
@@ -141,6 +142,7 @@ function displayStepGoal() {
   }
   stepGoalGraphBuilder(stepData,  stepGoal, displayMessage, titleText, legendStatus)
 }
+
 function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
   let hydrationChart = new CanvasJS.Chart(chartName, {
@@ -189,7 +191,8 @@ function comparisonGraphBuilder(allProperty, userProperty, id, name, pickedInter
   });
   chart.render();
 }
-function hotStreakGraphBuilder(data) {
+
+function hotStreakGraphBuilder(displayData) {
   let chart = new CanvasJS.Chart("consecutive-days", {
     backgroundColor: "#1D222E",
     animationEnabled: true,
@@ -204,10 +207,11 @@ function hotStreakGraphBuilder(data) {
     axisY: {
       minimum: 0,
     },
-    data: data
+    data: displayData
   });
   chart.render();
 }
+
 function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
   let chart = new CanvasJS.Chart("doughnutChart", {
     backgroundColor: "#1D222E",

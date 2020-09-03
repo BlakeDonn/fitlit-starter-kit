@@ -3,15 +3,18 @@ class Sleep {
     this.sleepSet = sleepSet;
     this.date = this.sleepSet[this.sleepSet.length - 1].date;
   }
+
   userSleepData(id) {
     return this.sleepSet.filter(dailySleep => dailySleep.userID === id);
   }
+
   daySleep(id, startingDate ) {
-    if(!startingDate) {
+    if (!startingDate) {
       startingDate = this.date;
     }
     return this.sleepSet.find(day => day.date === startingDate && day.userID === id);
   }
+  
   weeklySleepProperties(id, startingDate) {
     if (!startingDate) {
       startingDate = this.date;
@@ -20,6 +23,7 @@ class Sleep {
     let indexOfLastDay = this.userSleepData(id).indexOf(lastDayInWeek);
     return this.userSleepData(id).slice(indexOfLastDay - 6, indexOfLastDay + 1)
   }
+
   averageAllTimeSleep(id, property) {
     let getUserData = this.userSleepData(id)
     let allTimeSleep = getUserData.reduce((sleep, day) =>{
@@ -27,12 +31,14 @@ class Sleep {
     }, 0)
     return Math.round((allTimeSleep / getUserData.length) * 10) / 10
   }
+
   averageSleepQuality() {
     let average = this.sleepSet.reduce((quality, user) => {
       return quality += user.sleepQuality;
     }, 0)
     return Math.round(average / this.sleepSet.length * 10) / 10;
   }
+
   sleepQualityAboveThree(startingDate) {
     if (!startingDate) {
       startingDate = this.date
@@ -50,6 +56,7 @@ class Sleep {
     })
     return qualityAboveThree
   }
+
   userWhoSleptTheMost(startingDate) {
     if (!startingDate) {
       startingDate = this.date
@@ -58,6 +65,7 @@ class Sleep {
     let topSleeper = sleepDataPerDay.sort((a, b) => b.hoursSlept - a.hoursSlept);
     return topSleeper[0].userID;
   }
+
   userWhoSleptTheLeast(startingDate) {
     if (!startingDate) {
       startingDate = this.date
@@ -66,6 +74,7 @@ class Sleep {
     let topSleeper = sleepDataPerDay.sort((a, b) => a.hoursSlept - b.hoursSlept);
     return topSleeper[0].userID;
   }
+  
 }
 
 if (typeof module !== 'undefined') {
