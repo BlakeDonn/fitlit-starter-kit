@@ -20,7 +20,7 @@ function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
   userRepository = new UserRepository(userData);
-  hydrationRepository = new HydrationRepository(hydrationData);
+  hydration = new Hydration(hydrationData);
   sleep = new Sleep(sleepData);
   activity = new Activity(activityData);
 }
@@ -54,8 +54,8 @@ function displayDayConsumption() {
     <p class="hydration-for-day-number">${hydrationRepository.dayOunces(user.userData.id).numOunces}oz</p>`
 }
 function displayWeeklyConsumption() {
-  let userHydrationData = hydrationRepository.weeklyHydrationProperties(user.userData.id)
-  weeklyDataGraphBuilder(userHydrationData, 'hydrationChart','Ounces Drank Per Day (oz)', 'numOunces');
+  let userHydrationData = hydration.weeklyHydrationProperties(user.userData.id)
+  weeklyDataGraphBuilder(userHydrationData, 'hydrationChart', 'Ounces Drank Per Day (oz)', 'numOunces');
 }
 function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
@@ -80,7 +80,6 @@ function displayWeeklySleep() {
   weeklyDataGraphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
 function displayDayActivity() {
-  let dayActivity = document.querySelector('.day-activity-card')
   let stepData = document.querySelector('.today-step-data')
   let minActive = document.querySelector('.today-minutes-active')
   let walkedMiles = document.querySelector('.today-distance-walked')
@@ -93,12 +92,11 @@ function displayDayActivity() {
 }
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
-  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps') 
+  weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps')
   weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
 function displayDayComparison() {
-  let compareDayActivity = document.querySelector('.comparison-activity-card')
   let activityFindAllUsers = activity.allUserAverage()
   let activityUsers = activity.dayData(user.userData.id)
   comparisonGraphBuilder(activityFindAllUsers.numSteps, activityUsers.numSteps, "comparison-steps", "Number of Steps", 2500)
@@ -106,7 +104,7 @@ function displayDayComparison() {
   comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
 function displayHotStreak() {
-  let consecutiveDays = activity.consecutiveDays(user.userData.id,)
+  let consecutiveDays = activity.consecutiveDays(user.userData.id)
   let data = []
   consecutiveDays.forEach((day, i) => {
     data.push({
@@ -147,14 +145,14 @@ function weeklyDataGraphBuilder(userData, chartName, title, prop1) {
   let dataPoint = userData.map(x => ({label: x.date, y: x[prop1]}))
   let hydrationChart = new CanvasJS.Chart(chartName, {
     backgroundColor: "#1D222E",
-    title:{
+    title: {
       text: title,
       fontColor: "#EBECF0",
     },
-    axisX:{
+    axisX: {
       labelFontColor: "#EBECF0"
     },
-    axisY:{
+    axisY: {
       labelFontColor: "#EBECF0"
     },
     data: [
@@ -196,14 +194,14 @@ function hotStreakGraphBuilder(data) {
     backgroundColor: "#1D222E",
     animationEnabled: true,
     theme: "dark1",
-    title:{
+    title: {
       text: "Your Hot Streaks"
     },
-    axisX:{
+    axisX: {
       interval: 1,
       labelFontSize: 12
     },
-    axisY:{
+    axisY: {
       minimum: 0,
     },
     data: data
@@ -211,9 +209,9 @@ function hotStreakGraphBuilder(data) {
   chart.render();
 }
 function stepGoalGraphBuilder (stepData,  stepGoal, displayMessage, titleText, legendStatus) {
-  let chart = new CanvasJS.Chart("doughnutChart",{
+  let chart = new CanvasJS.Chart("doughnutChart", {
     backgroundColor: "#1D222E",
-    title:{
+    title: {
       text: titleText,
       fontColor: "#EBECF0"
     },

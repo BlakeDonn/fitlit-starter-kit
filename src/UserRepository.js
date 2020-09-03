@@ -8,7 +8,7 @@ class UserRepository {
   }
   getAvgStepGoal() {
     return this.userData.reduce((allAvgSteps, user) => {
-      return allAvgSteps += user.dailyStepGoal/this.userData.length
+      return allAvgSteps += user.dailyStepGoal / this.userData.length
     }, 0);
   }
   returnFriendFullName(users) {

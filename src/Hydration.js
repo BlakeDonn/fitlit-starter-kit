@@ -1,4 +1,4 @@
-class HydrationRepository {
+class Hydration {
   constructor(hydrationSet) {
     this.hydrationSet = hydrationSet
     this.date = this.hydrationSet[this.hydrationSet.length - 1].date;
@@ -29,5 +29,5 @@ class HydrationRepository {
   }
 }
 if (typeof module !== 'undefined') {
-  module.exports = HydrationRepository;
+  module.exports = Hydration;
 }

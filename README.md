@@ -1,82 +1,69 @@
-# FitLit Starter Kit
+## FitLit Group Project
 
-The details of this project are outline in [this project spec](http://frontend.turing.io/projects/fitlit.html).
+**Contributors**
 
-## Setup
+[Blake Donnelly](https://github.com/BlakeDonn), [Katy St Sauveur](https://github.com/krogowsk531), [Michael Walker](https://github.com/MichaelEWalker87)
 
-1. Within your group, decide on one person to have the project repository (repo) on their GitHub account. Then, that person should fork this repo - on the top right corner of this page, click the **Fork** button.
-1. Both memebers of the group should clone down the _forked_ repo. Since you don't want to name your project "activity-tracker-starter", you can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` to install project dependencies.
-1. Run `open src/index.html` in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page)
-1. Make sure both members of your team are collaborators on the forked repo.
+**Project Description**
 
-## Testing
+*A site for fitness and health tracking where users can view information important to their health.  A user can view personal data regarding their water intake, activity levels and sleep information.
 
-There is no boilerplate for testing in this starter-kit repo. You will need to set this up yourself. However, if you ran `npm install`, then the tooling you need to start testing is already installed (`mocha` and `chai`).
+**Installation**
 
-## Linting Your Code
+**Fork this repository:**
 
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit, but that's ok - the linter is still running successfully.
+* https://github.com/BlakeDonn/fitlit-starter-kit
 
-Your linter will look only at the JavaScript files you have within the `src` and the `test` directories.
+**Clone your forked repository**
 
-## Data Model
+* `git clone` and the copied URL
 
-**Users**
+**Change into the directory and install the project dependencies**
 
-```
-[
-  {
-    "id": [number],
-    "name": [string],
-    "address": [string],
-    "email": [string],
-    "strideLength": [number - feet],
-    "dailyStepGoal": [number - steps],
-    "friends": [array - one-way connection to other user(s)]
-  },
-  ...more user data
-]
-```
+* `cd` into directory and run `npm install` for dependencies
 
-**Activity**
+**Project Goals**
 
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "numSteps": [number - steps],
-    "minutesActive": [number - minutes],
-    "flightsOfStairs": [number - flights]
-  },
-  ...more activity data
-]
-```
+* Create a functioning app by following the spec below
+* Using ES6 create classes that communicate with each other
+* Write clean code that follows the Single Responsibility Principle
+* Build a strong testing suite using TDD
+* Manipulate data with object and array prototype methods
+* Display user data on a dashboard that presents  information in a clear way
 
-**Hydration**
+**Wins**
 
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "numOunces": [number - ounces]
-  },
-  ...more hydration data
-]
-```
+* Working with JS in a collaborative environment with a set deadline.
+* Have a fully functioning and displaying app.
+* Several rounds of refactoring in order to keep code as clean as possible.
 
-**Sleep**
+**Challenges**
 
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "hoursSlept": [number - hours],
-    "sleepQuality": [number - unitless]
-  },
-  ...more sleep data
-]
-```
+* Mastering the GitHub workflow with many branches and multiple team members.
+* Creating sad path tests for an application without any user inputs.
+* Getting all of the parts to display in a user friendly way on the dashboard.
+
+
+**Programming Languages Used**
+
+* HTML
+* CSS
+* JavaScript
+
+**Other Important Features Implemented**
+
+* Creating graphs to display data in an organized user friendly way.
+
+## Comps Given
+
+![Dashboard View](https://static1.fitbit.com/simple.b-cssdisabled-png.h7c5d2beb7af823f15fe022b8ff33daf8.pack?items=%2Fcontent%2Fassets%2Fapp2%2Fimages%2Fmacbook-pro.png)
+
+## In Action
+
+**Fitness Dashboard**
+
+![project page load](https://i.imgur.com/oIX4rKd.gif)
+
+ **Issues to be Resolved**
+
+ * When executing the final 5 functions of the Activity-test.js test suite, be sure to follow the instructions presented.These instructions aim to emulate script-linking as it would exist in a real-world scenario.
