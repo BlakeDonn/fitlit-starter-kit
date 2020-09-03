@@ -16,6 +16,7 @@ function onLoad() {
   displayStepGoal();
 
 }
+
 function populateRepos() {
   const randomUserId = Math.floor(Math.random() * userData.length)
   user = new User(userData[randomUserId])
@@ -24,10 +25,12 @@ function populateRepos() {
   sleep = new Sleep(sleepData);
   activity = new Activity(activityData);
 }
+
 function displayGreeting() {
   let greeting = document.querySelector('.user-profile-display')
   greeting.innerHTML = `Welcome, ${user.returnFirstName()}!`
 }
+
 function displayUserInfo() {
   let infoCard = document.querySelector('.user-info-card')
   infoCard.innerHTML +=
@@ -38,14 +41,17 @@ function displayUserInfo() {
     <p class="user-friends">Your Friends:</p>
     `
 }
+
 function makeFriendList() {
   let userFriends = userRepository.returnFriendFullName(user.userData.friends)
   return userFriends.map(friendName => `<p class="friend-names">${friendName}</p>`).join(" ")
 }
+
 function displayFriendList() {
   let friendList = document.querySelector('.user-friends')
   friendList.insertAdjacentHTML('afterend', this.makeFriendList())
 }
+
 function displayDayConsumption() {
   let waterConsumption = document.querySelector('.user-hydration-card')
   waterConsumption.innerHTML +=
@@ -53,10 +59,12 @@ function displayDayConsumption() {
     <p> Today's water consumption:</p>
     <p class="hydration-for-day-number">${hydration.dayOunces(user.userData.id).numOunces}oz</p>`
 }
+
 function displayWeeklyConsumption() {
   let userHydrationData = hydration.weeklyHydrationProperties(user.userData.id)
   weeklyDataGraphBuilder(userHydrationData, 'hydrationChart', 'Ounces Drank Per Day (oz)', 'numOunces');
 }
+
 function displayDaySleep() {
   let sleepProperties = document.querySelector('.day-sleep-card')
   sleepProperties.innerHTML +=
@@ -74,11 +82,13 @@ function displayDaySleep() {
   </p>
   `
 }
+
 function displayWeeklySleep() {
   let sleepWeekly = sleep.weeklySleepProperties(user.userData.id)
   weeklyDataGraphBuilder(sleepWeekly, 'sleepQualityChart', 'Nightly Sleep Quality', 'sleepQuality')
   weeklyDataGraphBuilder(sleepWeekly, 'sleepAmountChart', 'Nightly Sleep Amount (hours)', 'hoursSlept')
 }
+
 function displayDayActivity() {
   let stepData = document.querySelector('.today-step-data')
   let minActive = document.querySelector('.today-minutes-active')
@@ -90,12 +100,14 @@ function displayDayActivity() {
   walkedMiles.innerHTML +=
     `${activity.dailyMilesWalked(user.userData.id)}`
 }
+
 function displayWeeklyActivity() {
   let weeklyActivity = activity.weeklyActivityProperties(user.userData.id)
   weeklyDataGraphBuilder(weeklyActivity, 'stepCountWeeklyChart', 'Daily Step Count (steps)', 'numSteps')
   weeklyDataGraphBuilder(weeklyActivity, 'minutesActiveChart', 'Daily Minutes Active (minutes)', 'minutesActive')
   weeklyDataGraphBuilder(weeklyActivity, 'flightsClimbedChart', 'Daily Flights of Stairs Climbed (flights)', 'flightsOfStairs')
 }
+
 function displayDayComparison() {
   let activityFindAllUsers = activity.allUserAverage()
   let activityUsers = activity.dayData(user.userData.id)
@@ -103,6 +115,7 @@ function displayDayComparison() {
   comparisonGraphBuilder(activityFindAllUsers.minutesActive, activityUsers.minutesActive, "comparison-minutes", "Minutes Active", 50)
   comparisonGraphBuilder(activityFindAllUsers.flightsOfStairs, activityUsers.flightsOfStairs, "comparison-flights", "Flights of Stairs", 5)
 }
+
 function displayHotStreak() {
   let consecutiveDays = activity.consecutiveDays(user.userData.id)
   let displayData = []
